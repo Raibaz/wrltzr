@@ -17,27 +17,15 @@
 			
 			function do_search_tags() {
 				$('#results').html('');
-				available_songs = [];
+				available_songs = {};
 				$('#available_services :checked').each(function(index, value) {
 					console.log(value);
-					get_service($(this).attr('name')).search_tags($('#tags').val(), function(results) {											
-						$.each(results, function(index, value) {
-							available_songs.push(value);
-							var li_id = value.service.name + "_" + index;
-							if(value.artist && value.artist.name && value.name) {
-								li = '<li class="result" id="' + li_id + '"><span class="song_info">' + value.artist.name + " - " + value.name + '</span></li>';
-								$('#results').append(li);
-							}
-							if(value.embed) {								
-								value.embed.service.search_song(value.embed.key, function(embed_data) {	
-									value.embed.code = embed_data.code;
-									//$('#' + li_id).append(embed_data.code);
-								});
-							}
-						});
-						reorder_songs();
-						play_next_song();
-					});								
+					get_service($(this).attr('name')).search_tags($('#tags').val(), function(results) {
+						add_songs(results);
+						compute_next_song();
+						play_next_song();					
+					});
+					
 				});
 			}
 			

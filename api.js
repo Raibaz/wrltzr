@@ -9,8 +9,7 @@ var youtube = {
 	search_tags: function(tags, callback) {
 	}, search_song: function(title, callback) {		
 		$.getJSON('https://gdata.youtube.com/feeds/api/videos?q=' + title + '&orderby=relevance&v=2&max-results=1&alt=json', function(data) {
-			entry = data.feed.entry[0];
-			console.log(entry);
+			entry = data.feed.entry[0];	
 			resp = {
 				service_name: youtube.name,
 				service_id: entry.media$group.yt$videoid.$t,
@@ -44,6 +43,7 @@ var lastfm = {
 	},
 	build_song: function(service_song, lookup_service, callback) {	
 		ret = {
+			key: lastfm.name + "_" + service_song.artist.name + "_" + service_song.name,
 			service: lastfm,
 			name: service_song.name,
 			artist: {
