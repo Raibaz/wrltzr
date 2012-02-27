@@ -16,3 +16,7 @@
 #player {
 	width: 100%;
 }
+
+#commands {
+	display: none;
+}

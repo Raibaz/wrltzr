@@ -24,7 +24,7 @@ function compute_next_song() {
 	console.log("Computed next song");
 	next_song = found;
 	console.log(next_song);
-	return next_song;
+	$('#next_song_info').html(next_song.artist.name + " - " + next_song.name);
 }
 
 function play_next_song() {
