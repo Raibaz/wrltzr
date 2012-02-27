@@ -1,5 +1,6 @@
 $.getScript('api.js', function() {
 	console.log('finished loading api.js');
+	populate_services_weights();
 	populate_available_services();
 });
 
@@ -7,6 +8,11 @@ var available_songs = {};
 var played_songs = [];
 var current_song;
 var next_song;
+
+function populate_services_weights() {
+	get_service('lastfm').weight = 1;
+	get_service('Hype machine').weight = 0.75;
+}
 
 function populate_available_services() {
 	$.each(available_services, function(index, value) {
@@ -52,6 +58,9 @@ function play_next_song() {
 function add_similar_songs() {
 	current_song.service.get_song_tags(current_song, function(tags) {
 		console.log("Found tags " + tags);
+		if(!tags) {
+			return;
+		}
 		$.each(tags, function(index, value) {
 			current_song.service.search_tags(value, add_songs);
 		});

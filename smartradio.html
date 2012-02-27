@@ -23,14 +23,23 @@
 				$('#song_commands').show();
 				available_songs = {};
 				$('#available_services :checked').each(function(index, value) {
-					console.log(value);
-					get_service($(this).attr('name')).search_tags($('#tags').val(), function(results) {
-						add_songs(results);
-						compute_next_song();
-						play_next_song();					
-					});
+					search_type = $('#search_type').val();
+					console.log(search_type);
+					if(search_type == "artist") {
+						get_service($(this).attr('name')).search_artist($('#query').val(), search_callback);
+					} else if(search_type == 'tag') {
+						get_service($(this).attr('name')).search_tags($('#query').val(), search_callback);
+					} else {
+						get_service($(this).attr('name')).search_all($('#query').val(), search_callback);
+					}
 					
 				});
+			}
+
+			function search_callback(results) {
+				add_songs(results);
+				compute_next_song();
+				play_next_song();
 			}
 			
 			function skip_song() {
@@ -49,7 +58,9 @@
 	</head>
 	<body>
 		<fieldset>
-			<label for="tags">Choose some tags to look for: </label><input type="text" id="tags" name="tags"/><input type="button" id="search_tags" value="Go!"/>			
+			<label for="query">Choose something to look for: </label><input type="text" id="query" name="query"/>
+			<label for="search_type">Choose what to look for:  </label><select id="search_type" name="search_type"><option value="artist">Artist</option><option value="tag">Tag</option><option value="both">Both</option></select>
+			<input type="button" id="search_tags" value="Go!"/>	
 		</fieldset>
 		<fieldset id="available_services">&nbsp;</fieldset>
 		<div id="player">&nbsp;</div>
