@@ -42,7 +42,7 @@ function play_next_song() {
 		$('#player').html(current_song.embed.code);
 		start_youtube_player();
 	} else {
-		current_song.embed.service.search_song(current_song.embed.key, function(embed) {
+		current_song.embed.service.search_embed(current_song.embed.key, function(embed) {
 			current_song.embed.code = embed.code;
 			$('#player').html(embed.code);
 			if(embed.service_name === get_service('youtube').name) {
@@ -76,6 +76,10 @@ function add_songs(songs) {
 			available_songs[value.key] = value;
 		}
 
+		if(played_songs[value.key]) {
+			console.log("Found song already played, killing its score");
+			available_songs[value.key].score /= 5;
+		}
 		
 		var li_id = value.service.name + "_" + index;
 		if(value.artist && value.artist.name && value.name) {
@@ -83,7 +87,7 @@ function add_songs(songs) {
 				$('#results').append(li);
 		}
 		if(value.embed) {								
-			value.embed.service.search_song(value.embed.key, function(embed_data) {	
+			value.embed.service.search_embed(value.embed.key, function(embed_data) {	
 				value.embed.code = embed_data.code;
 					//$('#' + li_id).append(embed_data.code);
 			});

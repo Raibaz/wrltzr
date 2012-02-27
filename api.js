@@ -7,7 +7,7 @@ var get_service = function(service_name) {
 var youtube = {
 	name: "youtube",
 	search_tags: function(tags, callback) {
-	}, search_song: function(title, callback) {		
+	}, search_embed: function(title, callback) {		
 		$.getJSON('https://gdata.youtube.com/feeds/api/videos?q=' + title + '&orderby=relevance&v=2&max-results=1&alt=json', function(data) {
 			if(!data.feed.entry) {
 				return;
