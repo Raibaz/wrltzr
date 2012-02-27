@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+	<head>
+		<script src="util/console.js" type="text/javascript"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script src="http://www.youtube.com/player_api" type="text/javascript"></script>
+		<link rel="stylesheet" href="smartradio.css"/>
+		
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#search_tags').click(do_search_tags);
+				$('#skip_song').click(skip_song);
+				$.getScript('smartradio.js', function() {
+					console.log('finished loading smartradio.js');
+				});
+			});
+			
+			function do_search_tags() {
+				$('#results').html('');
+				available_songs = [];
+				$('#available_services :checked').each(function(index, value) {
+					console.log(value);
+					get_service($(this).attr('name')).search_tags($('#tags').val(), function(results) {											
+						$.each(results, function(index, value) {
+							available_songs.push(value);
+							var li_id = value.service.name + "_" + index;
+							if(value.artist && value.artist.name && value.name) {
+								li = '<li class="result" id="' + li_id + '"><span class="song_info">' + value.artist.name + " - " + value.name + '</span></li>';
+								$('#results').append(li);
+							}
+							if(value.embed) {								
+								value.embed.service.search_song(value.embed.key, function(embed_data) {	
+									value.embed.code = embed_data.code;
+									//$('#' + li_id).append(embed_data.code);
+								});
+							}
+						});
+						reorder_songs();
+						play_next_song();
+					});								
+				});
+			}
+			
+			function skip_song() {
+				play_next_song();
+			}
+		</script>
+		
+	</head>
+	<body>
+		<fieldset>
+			<label for="tags">Choose some tags to look for: </label><input type="text" id="tags" name="tags"/><input type="button" id="search_tags" value="Go!"/>			
+		</fieldset>
+		<fieldset id="available_services">&nbsp;</fieldset>
+		<div id="player">&nbsp;</div>
+		<div id="commands"><a id="skip_song">Next song</a></div>
+		<ul id="results"/>
+	</body>
+</html>

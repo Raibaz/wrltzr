@@ -1,0 +1,31 @@
+Hype machine: non ha i tag ma ha la ricerca per artista/titolo e l'api json
+Last.fm: api completa con ricerca per tag, similar artists, geo, group http://www.lastfm.it/api/account
+Grooveshark: api sia per la ricerca che per lo streaming http://developers.grooveshark.com/docs/public_api/v3/
+Mixcloud: ricerca per tag, artista, nome traccia: http://www.mixcloud.com/developers/documentation/
+Soundcloud: tuttecose http://developers.soundcloud.com/sdks
+Deezer: pare avere l'api per la ricerca, il servizio fa cagare ma tant'è http://www.deezer.com/it/developers/simpleapi/explorer
+Echonest: servizio di catalogone musicale, ha la ricerca complicatissima con mille parametri possibili, da usare sicuramente: http://the.echonest.com/
+
+
+
+
+
+
+$.getJSON('http://hypem.com/playlist/search/' + $('#tags').val() + '/json/1/data.js', function(data) {
+					console.log(data);
+					$.each(data, function(index, value) {
+						if(value.artist && value.title) {
+							$('#results').append('<li class="result" id="' + value.postid + '">' + value.artist + " - " + value.title + '</li>');
+							$.getJSON("https://gdata.youtube.com/feeds/api/videos?q=" + value.artist.replace(" ", "+") + "+" + value.title.replace(" ", "+") + "&max-results=1&v=2&alt=json", function(youtube_res) {
+								console.log(youtube_res);
+								data = youtube_res.feed;
+								if(!data.entry) {
+									return;
+								}
+								videoid = data.entry[0].media$group.yt$videoid.$t;
+								console.log(videoid);
+								$('#' + value.postid).append('<iframe height="30" src="http://www.youtube.com/embed/' + videoid + '" frameborder="0" allowfullscreen></iframe>');								
+							});
+						}
+					})
+				});

@@ -1,0 +1,18 @@
+.result {
+	list-style-type: none;
+	width: 100%;
+}
+
+.song_info {
+	width: 50%;
+	float: left;
+}
+
+.youtube_player {
+	float: right;
+	width: 50%;
+}
+
+#player {
+	width: 100%;
+}
