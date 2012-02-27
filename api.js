@@ -76,6 +76,9 @@ var lastfm = {
 			console.log('get_song_tags');
 			$.getJSON('http://ws.audioscrobbler.com/2.0/?method=track.getinfo&artist=' + escape(song.artist.name) + '&track=' + escape(song.name) + '&api_key=f1ad626c3a2d588bfd87788d38606b95&format=json', function(data) {	
 				tags = [];
+				if(!data.track || !data.track.toptags || !data.track.toptags.tag) {
+					return;
+				}
 				$.each(data.track.toptags.tag, function(index, value) {
 					tags.push(value.name);
 				});
