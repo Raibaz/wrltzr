@@ -14,9 +14,18 @@
 }
 
 #player {
-	width: 100%;
+	width: 40%;
+	float: left;
+}
+
+#song_commands {
+	display: none;
+	width: 60%;
+	float: left;
 }
 
 #commands {
 	display: none;
+	float: left;
+	width: 100%;
 }

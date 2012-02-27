@@ -10,6 +10,8 @@
 			$(document).ready(function() {
 				$('#search_tags').click(do_search_tags);
 				$('#skip_song').click(skip_song);
+				$('#like_song').click(like_song);
+				$('#dislike_song').click(dislike_song);
 				$.getScript('smartradio.js', function() {
 					console.log('finished loading smartradio.js');
 				});
@@ -18,6 +20,7 @@
 			function do_search_tags() {
 				$('#results').html('');
 				$('#commands').show();
+				$('#song_commands').show();
 				available_songs = {};
 				$('#available_services :checked').each(function(index, value) {
 					console.log(value);
@@ -33,6 +36,14 @@
 			function skip_song() {
 				play_next_song();
 			}
+
+			function like_song() {
+				update_all_scores(1);			
+			}
+
+			function dislike_song() {
+				update_all_scores(-1);			
+			}
 		</script>
 		
 	</head>
@@ -42,6 +53,7 @@
 		</fieldset>
 		<fieldset id="available_services">&nbsp;</fieldset>
 		<div id="player">&nbsp;</div>
+		<div id="song_commands">Like this song? <a id="like_song" href="#">Yes</a>/<a id="dislike_song" href="#">No</a></div>
 		<div id="commands">Next song: <span id="next_song_info">&nbsp;</span> <a id="skip_song" href="#">Play</a></div>
 		<ul id="results"/>
 	</body>

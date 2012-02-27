@@ -45,11 +45,11 @@ function play_next_song() {
 			}
 		});
 	} 
-	search_similar_songs();
+	add_similar_songs();
 	compute_next_song();
 }
 
-function search_similar_songs() {
+function add_similar_songs() {
 	current_song.service.get_song_tags(current_song, function(tags) {
 		console.log("Found tags " + tags);
 		$.each(tags, function(index, value) {
@@ -93,5 +93,22 @@ function start_youtube_player() {
 				}
 			}
 		}
+	});
+}
+
+function update_all_scores(coeff) {
+	current_song.service.get_song_tags(current_song, function(tags) {
+		$.each(tags, function(index, value) {
+			current_song.service.search_tags(value, function(songs) {
+				$.each(songs, function(index, value) {
+					if(available_songs[value.key]) {
+						console.log("Updating score for " + value.key + " by adding " + (value.score * coeff));
+						available_songs[value.key].score += (value.score * coeff);
+					}
+				});
+				//TODO: this should be at the end of all tags, not here at the end of every tag				
+				compute_next_song();				
+			})
+		});
 	});
 }
