@@ -18,6 +18,12 @@
 	float: left;
 }
 
+#song_info {
+	display: none;
+	width: 60%;
+	float: left;
+}
+
 #song_commands {
 	display: none;
 	width: 60%;

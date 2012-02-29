@@ -8,9 +8,9 @@ var youtube = {
 	name: "youtube",
 	search_tags: function(tags, callback) {
 	}, search_embed: function(title, callback) {		
-		$.getJSON('https://gdata.youtube.com/feeds/api/videos?q=' + title + '&orderby=relevance&v=2&max-results=1&alt=json', function(data) {
+		$.getJSON('https://gdata.youtube.com/feeds/api/videos?q=' + title + '&orderby=relevance&v=2&max-results=1&alt=json&category=music', function(data) {
 			if(!data.feed.entry) {
-				return;
+				callback(undefined);
 			}
 			entry = data.feed.entry[0];				
 			resp = {
@@ -53,7 +53,7 @@ var lastfm = {
 	},
 	build_song: function(service_song, lookup_service, callback) {	
 		ret = {
-			key: lastfm.name + "_" + service_song.artist.name + "_" + service_song.name,
+			key: service_song.artist.name + "_" + service_song.name,
 			service_id: service_song.mbid,
 			service: lastfm,
 			name: service_song.name,
@@ -121,7 +121,7 @@ var hype_machine = {
 	},
 	build_song: function(service_song, lookup_service, callback) {
 		ret = {
-			key: hype_machine.name + "_" + service_song.artist + "_" + service_song.title,
+			key: service_song.artist + "_" + service_song.title,
 			service: hype_machine,
 			name: service_song.title,
 			service_id: service_song.mediaid,

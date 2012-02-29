@@ -8,6 +8,7 @@ var available_songs = {};
 var played_songs = [];
 var current_song;
 var next_song;
+var player_playing = false;
 
 function populate_services_weights() {
 	get_service('lastfm').weight = 1;
@@ -38,16 +39,23 @@ function play_next_song() {
 	next_song = undefined;
 	delete available_songs[current_song.key];
 	played_songs[current_song.key] = current_song;
-	if(current_song.embed.code) {
+	if(current_song.embed && current_song.embed.code) {
 		$('#player').html(current_song.embed.code);
+		$('#song_info').html(current_song.artist.name + " - " +current_song.name).show();
 		start_youtube_player();
 	} else {
 		current_song.embed.service.search_embed(current_song.embed.key, function(embed) {
-			current_song.embed.code = embed.code;
-			$('#player').html(embed.code);
-			if(embed.service_name === get_service('youtube').name) {
-				console.log('now calling youtube player api');
-				start_youtube_player();
+			if(!embed) {
+				delete available_songs[current_song.embed.key];
+
+			} else {
+				current_song.embed.code = embed.code;
+				$('#player').html(embed.code);
+				$('#song_info').html(current_song.artist.name + " - " +current_song.name).show();
+				if(embed.service_name === get_service('youtube').name) {
+					console.log('now calling youtube player api');
+					start_youtube_player();
+				}
 			}
 		});
 	} 
@@ -72,12 +80,13 @@ function add_songs(songs) {
 		if(available_songs[value.key]) {
 			console.log("Found song " + value.key + ", adding " + value.score + " to its score");
 			available_songs[value.key].score += value.score;
+			//TODO if there is a better embed, replace it it
 		} else {
 			available_songs[value.key] = value;
 		}
 
 		if(played_songs[value.key]) {
-			console.log("Found song already played, killing its score");
+			console.log("Found song " + value.name + " already played, killing its score");
 			available_songs[value.key].score /= 5;
 		}
 		
@@ -87,7 +96,10 @@ function add_songs(songs) {
 				$('#results').append(li);
 		}
 		if(value.embed) {								
-			value.embed.service.search_embed(value.embed.key, function(embed_data) {	
+			value.embed.service.search_embed(value.embed.key, function(embed_data) {
+				if(!embed_data) {
+					delete available_songs[value.key];
+				}	
 				value.embed.code = embed_data.code;
 					//$('#' + li_id).append(embed_data.code);
 			});
@@ -100,6 +112,7 @@ function start_youtube_player() {
 		events: {
 			'onReady': function(event) {
 				event.target.playVideo();
+				player_playing = true;
 			}, 'onStateChange': function(event) {
 				if(event.data === YT.PlayerState.ENDED) {
 					play_next_song();

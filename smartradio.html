@@ -39,7 +39,9 @@
 			function search_callback(results) {
 				add_songs(results);
 				compute_next_song();
-				play_next_song();
+				if(!player_playing) {
+					play_next_song();
+				}
 			}
 			
 			function skip_song() {
@@ -64,6 +66,7 @@
 		</fieldset>
 		<fieldset id="available_services">&nbsp;</fieldset>
 		<div id="player">&nbsp;</div>
+		<div id="song_info">&nbsp</div>
 		<div id="song_commands">Like this song? <a id="like_song" href="#">Yes</a>/<a id="dislike_song" href="#">No</a></div>
 		<div id="commands">Next song: <span id="next_song_info">&nbsp;</span> <a id="skip_song" href="#">Play</a></div>
 		<ul id="results"/>
