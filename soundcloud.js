@@ -2,6 +2,7 @@ var sound_cloud = {
 	name: "Soundcloud",
 	search_results_count: 20,
 	client_id: 'bbddf35ebd6e8fedb840ed23f1c0e7ec',
+	weight: 2,
 	search_all: function(query, callback) {
 		sound_cloud.search_artist(query, callback);
 		sound_cloud.search_tags(query, callback);
@@ -14,7 +15,9 @@ var sound_cloud = {
 	},
 	search_helper: function(url, callback) {
 		$.getJSON(url, function(data) {
-			console.log(data);
+			if(!data || data.length == 0) {
+				callback(sound_cloud.name);
+			}
 			$.each(data, function(index, value) {
 				results = new Array();
 				lookup_service = get_service('Soundcloud');
@@ -41,12 +44,13 @@ var sound_cloud = {
 				service: lookup_service,
 				service_id: service_song.id,
 				title: service_song.title
-			}
+			},
+			tags: service_song.tag_list.split(" ")
 		};
 		callback(ret);
 	},	
 	compute_score: function(service_song) {
-
+		return (service_song.playback_count / 1000) + (service_song.favoritings_count / 100);
 	},
 	search_embed: function(embed, callback) {		
 		resp = {
@@ -55,8 +59,10 @@ var sound_cloud = {
 		}
 		callback(resp);		
 	},
-	get_song_tags: function(key, callback) {
-		
+	get_song_tags: function(song, callback) {
+		if(song.tags) {
+			callback(song.tags);
+		}
 	}
 };
 
