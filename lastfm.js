@@ -7,8 +7,12 @@ var lastfm = {
 		lastfm.search_artist(query, callback);
 	},
 	search_helper: function(url, callback) {
-		$.getJSON(url, function(data) {				
+		$.getJSON(url, function(data) {			
 			console.log(data);
+			if(!data.toptracks.track || data.toptracks.track.length == 0) {				
+				callback(lastfm.name);
+				return;
+			}
 			results = new Array();
 			var lookup_service = get_service('youtube');
 			$.each(data.toptracks.track, function(index, value) {				

@@ -39,7 +39,13 @@
 				});
 			}
 
-			function search_callback(results) {				
+			function search_callback(results) {												
+				if(typeof(results) == 'string') {
+					
+					$('#'+results).removeAttr('pending');
+					return;
+				}
+				add_songs(results);
 				$('#' + results[0].service.name).removeAttr('pending');
 				console.log("Removed pending for service " + results[0].service.name);
 				var can_go = true;
@@ -52,8 +58,7 @@
 				});
 				if(!can_go) {					
 					return;
-				}
-				add_songs(results);
+				}				
 				compute_next_song();				
 				play_next_song();
 				

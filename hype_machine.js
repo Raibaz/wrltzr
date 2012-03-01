@@ -7,7 +7,10 @@ var hype_machine = {
 		hype_machine.search_artist(query, callback);
 	},
 	search_helper: function(url, callback) {
-		$.getJSON(url, function(data) {			
+		$.getJSON(url, function(data) {
+			if(!data || data.length == 0) {
+				callback(hype_machine.name);
+			}
 			results = new Array();
 			lookup_service = get_service('youtube');
 			$.each(data, function(index, value) {
