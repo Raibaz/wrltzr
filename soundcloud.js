@@ -1,16 +1,16 @@
-var soundcloud = {
+var sound_cloud = {
 	name: "Soundcloud",
 	search_results_count: 20,
 	client_id: 'bbddf35ebd6e8fedb840ed23f1c0e7ec',
 	search_all: function(query, callback) {
-		soundcloud.search_artist(query, callback);
-		soundcloud.search_tags(query, callback);
+		sound_cloud.search_artist(query, callback);
+		sound_cloud.search_tags(query, callback);
 	},
 	search_tags: function(query, callback) {
-		soundcloud.search_helper('http://api.soundcloud.com/tracks.json?client_id=' + soundcloud.client_id + '&limit=' + soundcloud.search_results_count + '&order=hotness&filter=streamable&state=finished&tags=' + escape(query).replace(' ', ','), callback);
+		sound_cloud.search_helper('http://api.soundcloud.com/tracks.json?client_id=' + sound_cloud.client_id + '&limit=' + sound_cloud.search_results_count + '&order=hotness&filter=streamable&state=finished&tags=' + escape(query).replace(' ', ','), callback);
 	},
 	search_artist: function(query, callback) {
-		soundcloud.search_helper('http://api.soundcloud.com/tracks.json?client_id=' + soundcloud.client_id + '&limit=' + soundcloud.search_results_count + '&order=hotness&filter=streamable&state=finished&q=' + escape(query), callback);
+		sound_cloud.search_helper('http://api.soundcloud.com/tracks.json?client_id=' + sound_cloud.client_id + '&limit=' + sound_cloud.search_results_count + '&order=hotness&filter=streamable&state=finished&q=' + escape(query), callback);
 	},
 	search_helper: function(url, callback) {
 		$.getJSON(url, function(data) {
@@ -19,7 +19,7 @@ var soundcloud = {
 				results = new Array();
 				lookup_service = get_service('Soundcloud');
 				$.each(data, function(index, value) {
-					soundcloud.build_song(value, lookup_service, function(song) {					
+					sound_cloud.build_song(value, lookup_service, function(song) {					
 						results.push(song);
 					});
 				});
@@ -31,15 +31,16 @@ var soundcloud = {
 		ret = {
 			key: service_song.user.username + "_" + service_song.title,
 			name: service_song.title,
-			service: soundcloud,
+			service: sound_cloud,
 			artist: {
 				name: service_song.user.username
 			},
-			score: soundcloud.compute_score(service_song),
+			score: sound_cloud.compute_score(service_song),
 			embed: {
 				key: service_song.permalink_url,
 				service: lookup_service,
-				service_id: service_song.id
+				service_id: service_song.id,
+				title: service_song.title
 			}
 		};
 		callback(ret);
@@ -47,23 +48,20 @@ var soundcloud = {
 	compute_score: function(service_song) {
 
 	},
-	search_embed: function(key, callback) {
-		$.getJSON('http://soundcloud.com/oembed?url=' + key + '&format=json&auto_play=true&iframe=true&show_comments=false', function(data) {
-			resp = {
-				code: data.html,
-				service_name: soundcloud.name,
-				title: data.title
-			};
-			callback(resp);
-		});
+	search_embed: function(embed, callback) {		
+		resp = {
+			code: '<div class="sc-player"><a href="' + embed.key + '"/></div>',
+			service_name: sound_cloud.name,			
+		}
+		callback(resp);		
 	},
 	get_song_tags: function(key, callback) {
 		
 	}
 };
 
-SC.initialize({
-	client_id: soundcloud.client_id
-});
+available_services['Soundcloud'] = sound_cloud;
 
-available_services['Soundcloud'] = soundcloud;
+$(document).bind('scPlayer:onMediaEnd', function(event) {
+	play_next_song();
+});

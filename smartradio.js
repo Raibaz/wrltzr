@@ -38,11 +38,15 @@ function play_next_song() {
 	next_song = undefined;
 	delete available_songs[current_song.key];
 	played_songs[current_song.key] = current_song;
-	if(current_song.embed && current_song.embed.code) {
-		console.log("found embed, using it");
+	if(current_song.embed && current_song.embed.code) {			
 		$('#player').html(current_song.embed.code);
 		$('#song_info').html(current_song.artist.name + " - " +current_song.name).show();
-		start_youtube_player();
+		if(current_song.embed.service.name == get_service('youtube').name) {								
+			start_youtube_player();						
+		} else if(current_song.embed.service.name == get_service('Soundcloud').name) {
+			console.log("starting soundcloud");
+			start_soundcloud_player(current_song.embed);
+		}
 	} else {
 		console.log("embed not found, looking for it with key = " + current_song.embed.key);
 		current_song.embed.service.search_embed(current_song.embed, function(embed) {			
@@ -55,16 +59,10 @@ function play_next_song() {
 				current_song.embed.code = embed.code;
 				$('#player').html(embed.code);
 				$('#song_info').html(current_song.artist.name + " - " +current_song.name).show();
-				if(embed.service_name === get_service('youtube').name) {								
+				if(embed.service_name == get_service('youtube').name) {								
 					start_youtube_player();						
-				} else if(embed.service_name === get_service('Soundcloud').name) {
-					SC.whenStreamingReady(function() {
-						var soundObj = SC.stream(current_song.embed.service_id);
-						soundObj.play();
-						soundObj.onfinish(function() {
-							play_next_song();
-						});
-					});
+				} else if(embed.service_name == get_service('Soundcloud').name) {					
+					start_soundcloud_player(embed);
 				}				
 			}
 		});
@@ -129,6 +127,21 @@ function start_youtube_player() {
 			}
 		}
 	});
+}
+
+function start_soundcloud_player(embed) {
+	if(!embed) {
+		embed = current_song.embed;
+	}	
+	$('#player .sc-player').scPlayer({
+		links: [{url: embed.key, title: embed.title}],
+		autoPlay: true,
+		apiKey: sound_cloud.client_id,
+		onPlayerTrackFinish: function() {
+			play_next_song();
+		}
+	});
+
 }
 
 function update_all_scores(coeff) {

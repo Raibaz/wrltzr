@@ -17,7 +17,7 @@ $.getScript('hype_machine.js', function() {
 
 $.getScript('soundcloud.js', function() {
 	console.log('loaded soundcloud.js');
-	add_service(soundcloud);
+	add_service(sound_cloud);
 });
 
 var get_service = function(service_name) {
