@@ -4,6 +4,7 @@
 		<script src="util/console.js" type="text/javascript"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 		<script src="http://www.youtube.com/player_api" type="text/javascript"></script>
+		<script src="http://connect.soundcloud.com/sdk.js" type="text/JavaScript"></script>
 		<link rel="stylesheet" href="smartradio.css"/>
 		
 		<script type="text/javascript">
@@ -23,8 +24,8 @@
 				$('#song_commands').show();
 				available_songs = {};
 				$('#available_services :checked').each(function(index, value) {
-					search_type = $('#search_type').val();
-					console.log(search_type);
+					$(this).attr('pending', 'true');
+					search_type = $('#search_type').val();					
 					if(search_type == "artist") {
 						get_service($(this).attr('name')).search_artist($('#query').val(), search_callback);
 					} else if(search_type == 'tag') {
@@ -36,12 +37,24 @@
 				});
 			}
 
-			function search_callback(results) {
-				add_songs(results);
-				compute_next_song();
-				if(!player_playing) {
-					play_next_song();
+			function search_callback(results) {				
+				$('#' + results[0].service.name).removeAttr('pending');
+				console.log("Removed pending for service " + results[0].service.name);
+				var can_go = true;
+				$('#available_services :checked').each(function(index, value) {
+					if($(this).attr('pending')) {
+						console.log("Found service " + $(this).attr('name') + " pending");
+						can_go = false;
+						return false;
+					}
+				});
+				if(!can_go) {					
+					return;
 				}
+				add_songs(results);
+				compute_next_song();				
+				play_next_song();
+				
 			}
 			
 			function skip_song() {

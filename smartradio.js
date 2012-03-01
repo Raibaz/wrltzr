@@ -1,19 +1,17 @@
 $.getScript('api.js', function() {
 	console.log('finished loading api.js');
-	populate_services_weights();
-	populate_available_services();
+	//populate_available_services();
 });
+
+function add_service(service) {
+	$('#available_services').append('<label for"' + service.name + '">' + service.name + '</label><input type="checkbox" name="' + service.name + '" id="' + service.name + '"/>');
+}
 
 var available_songs = {};
 var played_songs = [];
 var current_song;
 var next_song;
 var player_playing = false;
-
-function populate_services_weights() {
-	get_service('lastfm').weight = 1;
-	get_service('Hype machine').weight = 0.75;
-}
 
 function populate_available_services() {
 	$.each(available_services, function(index, value) {
@@ -35,27 +33,39 @@ function compute_next_song() {
 }
 
 function play_next_song() {
+	console.log("play_next_song");
 	current_song = next_song;
 	next_song = undefined;
 	delete available_songs[current_song.key];
 	played_songs[current_song.key] = current_song;
 	if(current_song.embed && current_song.embed.code) {
+		console.log("found embed, using it");
 		$('#player').html(current_song.embed.code);
 		$('#song_info').html(current_song.artist.name + " - " +current_song.name).show();
 		start_youtube_player();
 	} else {
-		current_song.embed.service.search_embed(current_song.embed.key, function(embed) {
+		console.log("embed not found, looking for it with key = " + current_song.embed.key);
+		current_song.embed.service.search_embed(current_song.embed, function(embed) {			
 			if(!embed) {
 				delete available_songs[current_song.embed.key];
-
+				compute_next_song();
+				play_next_song();
 			} else {
+				console.log("Loaded embed: " + embed.service_id);
 				current_song.embed.code = embed.code;
 				$('#player').html(embed.code);
 				$('#song_info').html(current_song.artist.name + " - " +current_song.name).show();
-				if(embed.service_name === get_service('youtube').name) {
-					console.log('now calling youtube player api');
-					start_youtube_player();
-				}
+				if(embed.service_name === get_service('youtube').name) {								
+					start_youtube_player();						
+				} else if(embed.service_name === get_service('Soundcloud').name) {
+					SC.whenStreamingReady(function() {
+						var soundObj = SC.stream(current_song.embed.service_id);
+						soundObj.play();
+						soundObj.onfinish(function() {
+							play_next_song();
+						});
+					});
+				}				
 			}
 		});
 	} 
@@ -96,12 +106,12 @@ function add_songs(songs) {
 				$('#results').append(li);
 		}
 		if(value.embed) {								
-			value.embed.service.search_embed(value.embed.key, function(embed_data) {
+			value.embed.service.search_embed(value.embed, function(embed_data) {				
 				if(!embed_data) {
-					delete available_songs[value.key];
-				}	
-				value.embed.code = embed_data.code;
-					//$('#' + li_id).append(embed_data.code);
+					delete available_songs[value.key];					
+				} else {
+					value.embed.code = embed_data.code;					
+				}
 			});
 		}
 	});
@@ -111,8 +121,7 @@ function start_youtube_player() {
 	player = new YT.Player('youtube-player', {
 		events: {
 			'onReady': function(event) {
-				event.target.playVideo();
-				player_playing = true;
+				event.target.playVideo();				
 			}, 'onStateChange': function(event) {
 				if(event.data === YT.PlayerState.ENDED) {
 					play_next_song();
@@ -126,10 +135,15 @@ function update_all_scores(coeff) {
 	current_song.service.get_song_tags(current_song, function(tags) {
 		$.each(tags, function(index, value) {
 			current_song.service.search_tags(value, function(songs) {
-				$.each(songs, function(index, value) {
+				$.each(songs, function(index, value) {					
 					if(available_songs[value.key]) {
-						console.log("Updating score for " + value.key + " by adding " + (value.score * coeff));
-						available_songs[value.key].score += (value.score * coeff);
+						artist_coeff = 1;
+						if($('#search_type').val() === 'artist' && value.artist.name === current_song.artist.name) {
+							console.log("Further bump for same artist");
+							artist_coeff = 2;
+						}
+						console.log("Updating score for " + value.key + " by adding " + (value.score * coeff * artist_coeff));
+						available_songs[value.key].score += (value.score * coeff * artist_coeff);
 					}
 				});
 				//TODO: this should be at the end of all tags, not here at the end of every tag				
