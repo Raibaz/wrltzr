@@ -25,7 +25,7 @@ var youtube = {
 				service_name: youtube.name,
 				service_id: entry.media$group.yt$videoid.$t,
 				title: entry.media$group.media$title.$t,
-				code: '<iframe id="youtube-player" class="youtube-player" type="text/html" height="390" src="http://www.youtube.com/embed/' + entry.media$group.yt$videoid.$t + '?enablejsapi=1&origin=' + escape('http://localhost:81'	) +'" frameborder="0"></iframe>'
+				code: '<iframe id="youtube-player" class="youtube-player" type="text/html" height="390" src="http://www.youtube.com/embed/' + entry.media$group.yt$videoid.$t + '?enablejsapi=1&origin=' + escape('http://raibaz.github.com/wrltzr'	) +'" frameborder="0"></iframe>'
 			}
 			callback(resp);
 		});

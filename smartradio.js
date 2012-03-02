@@ -13,12 +13,6 @@ var current_song;
 var next_song;
 var player_playing = false;
 
-function populate_available_services() {
-	$.each(available_services, function(index, value) {
-		$('#available_services').append('<label for"' + value.name + '">' + value.name + '</label><input type="checkbox" name="' + value.name + '" id="' + value.name + '"/>');
-	});
-}
-
 function compute_next_song() {
 	found = undefined;
 	$.each(available_songs, function(index, value) {
