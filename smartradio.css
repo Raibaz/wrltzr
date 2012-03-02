@@ -1,3 +1,26 @@
+#top {
+	width: 100%;
+	float: left;
+}
+
+#top #heading {
+	width: 40%;
+	float: left;
+}
+
+#top #heading h1 {
+	border: none;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 128px;
+	padding: 0px 40px;	
+}
+
+#top #user-inputs {
+	width: 60%;
+	float: left;
+	margin: 130px 0px;
+}
+
 .result {
 	list-style-type: none;
 	width: 100%;
