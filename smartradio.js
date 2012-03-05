@@ -34,6 +34,13 @@ function play_next_song() {
 	next_song = undefined;
 	delete available_songs[current_song.key];
 	played_songs[current_song.key] = current_song;
+
+	//Stop any Soundcloud players
+	pause_link = $('.playing a.sc-pause');
+	if(pause_link) {
+		pause_link.click(); 
+	}
+
 	if(current_song.embed && current_song.embed.code) {			
 		$('#player').html(current_song.embed.code);
 		$('#song_info').html(current_song.artist.name + " - " +current_song.name).show();
