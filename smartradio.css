@@ -18,7 +18,17 @@
 #top #user-inputs {
 	width: 60%;
 	float: left;
-	margin: 130px 0px;
+	margin: 80px 0px;
+}
+
+#top #user-inputs #available_services {
+	height: 130px;
+}
+
+#top #user-inputs #available_services .service {
+	height: 100%;
+	width: 120px;
+	float: left;
 }
 
 .result {

@@ -5,9 +5,15 @@
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 		<script src="http://www.youtube.com/player_api" type="text/javascript"></script>		
 		<link rel="stylesheet" href="smartradio.css"/>
-		<link rel="stylesheet" href="lib/soundcloud/sc-player-standard.css"/>		
+		
+		<!-- Soundcloud custom player -->
+		<link rel="stylesheet" href="lib/soundcloud/sc-player-standard.css"/>				
 		<script src="lib/soundcloud/soundcloud.player.api.js" type="text/javascript"></script>
 		<script src="lib/soundcloud/sc-player.js" type="text/javascript"></script>
+
+		<!-- jQuery UI -->
+		<script src="lib/jquery-ui/jquery-ui-1.8.18.custom.min.js" type="text/javascript"></script>
+		<link rel="stylesheet" href="lib/jquery-ui/overcast/jquery-ui-1.8.18.custom.css"/>
 		
 		<script type="text/javascript">
 			$(document).ready(function() {
@@ -106,7 +112,7 @@
 					<label for="search_type">Choose what to look for:  </label><select id="search_type" name="search_type"><option value="artist">Artist</option><option value="tag">Tag</option><option value="both">Both</option></select>
 					<input type="button" id="search_tags" value="Go!"/>	
 				</fieldset>
-				<fieldset id="available_services">&nbsp;</fieldset>
+				<fieldset id="available_services">&nbsp;</fieldset>				
 			</div>
 		</div>
 		<div id="bottom">

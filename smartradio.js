@@ -1,11 +1,32 @@
 $.getScript('api.js', function() {
-	console.log('finished loading api.js');
-	//populate_available_services();
+	console.log('finished loading api.js');	
 });
 
 function add_service(service) {
 	if(service.search_tags || service.search_artist) {
-		$('#available_services').append('<label for"' + service.name + '">' + service.name + '</label><input type="checkbox" name="' + service.name + '" id="' + service.name + '"/>');
+		$('#available_services').append('<span class="service"><label for"' + service.name + '">' + service.name + '</label><input type="checkbox" name="' + service.name + '" id="' + service.name + '"/><div id="' + service.name + '_slider" class="service-weight-slider"/></span>');		
+		console.log("Service " + service.name + " has default weight " + service.weight);
+		$('#' + service.name + "_slider").slider({
+			orientation: "vertical",
+			min: 0.1,
+			max: 5,
+			step: 0.1,
+			value: service.weight,
+			slide: function(event, ui) {								
+				this_id = $(this).attr('id');
+				this_id = this_id.replace('_slider', '');
+
+				checkbox = $('#' + this_id);
+				console.log(checkbox);
+				if(!checkbox.prop('checked')) {
+					checkbox.prop('checked', true);
+				}
+				
+				console.log("Setting " + this_id + " weight to " + ui.value);
+				service = get_service(this_id);				
+				recompute_scores(service, ui.value);
+			}
+		});
 	}
 }
 
@@ -25,7 +46,9 @@ function compute_next_song() {
 	console.log("Computed next song");
 	next_song = found;
 	console.log(next_song);
-	$('#next_song_info').html(next_song.artist.name + " - " + next_song.name);
+	if(next_song) {
+		$('#next_song_info').html(next_song.artist.name + " - " + next_song.name);
+	}
 }
 
 function play_next_song() {
@@ -167,4 +190,20 @@ function update_all_scores(coeff) {
 			})
 		});
 	});
+}
+
+function recompute_scores(service, new_weight) {
+	for(cur in available_songs) {
+		if(!available_songs.hasOwnProperty(cur))  {
+			continue;
+		}
+		loop_song = available_songs[cur];
+		if(loop_song.service && loop_song.service.name == service.name) {
+			console.log("Updating score for " + cur + " from " + loop_song.score + " to " + ((loop_song.score / loop_song.service.weight) * new_weight));
+			loop_song.score = (loop_song.score / loop_song.service.weight) * new_weight;
+		}
+	}
+	service.weight = new_weight;
+	if(available_songs)
+	compute_next_song();
 }
