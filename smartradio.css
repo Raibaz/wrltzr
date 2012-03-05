@@ -66,5 +66,10 @@
 #commands {
 	display: none;
 	float: left;
+	width: 60%;
+}
+
+#results {
 	width: 100%;
+	float: left;
 }

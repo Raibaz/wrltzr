@@ -66,7 +66,7 @@ function play_next_song() {
 
 	if(current_song.embed && current_song.embed.code) {			
 		$('#player').html(current_song.embed.code);
-		$('#song_info').html(current_song.artist.name + " - " +current_song.name).show();
+		$('#song_info').html(build_song_info(current_song)).show();
 		if(current_song.embed.service.name == get_service('youtube').name) {								
 			start_youtube_player();						
 		} else if(current_song.embed.service.name == get_service('Soundcloud').name) {
@@ -84,7 +84,7 @@ function play_next_song() {
 				console.log("Loaded embed: " + embed.service_id);
 				current_song.embed.code = embed.code;
 				$('#player').html(embed.code);
-				$('#song_info').html(current_song.artist.name + " - " +current_song.name).show();
+				$('#song_info').html(build_song_info(current_song)).show();
 				if(embed.service_name == get_service('youtube').name) {								
 					start_youtube_player();						
 				} else if(embed.service_name == get_service('Soundcloud').name) {					
@@ -95,6 +95,13 @@ function play_next_song() {
 	} 
 	add_similar_songs();
 	compute_next_song();
+}
+
+function build_song_info(song) {
+	ret =  '<div class="track-info">' + song.artist.name + " - " + song.name + '</div>';
+	ret += '<div class="service-info">Found via ' + song.service.name + '</div>';
+	return ret;
+
 }
 
 function add_similar_songs() {
