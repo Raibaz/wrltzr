@@ -1,7 +1,5 @@
 var youtube = {
-	name: "youtube",
-	search_tags: function(tags, callback) {
-	}, 
+	name: "youtube",	
 	search_embed: function(embed, callback) {		
 		if(embed && embed.code) {
 			callback();

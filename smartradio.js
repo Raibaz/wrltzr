@@ -4,7 +4,9 @@ $.getScript('api.js', function() {
 });
 
 function add_service(service) {
-	$('#available_services').append('<label for"' + service.name + '">' + service.name + '</label><input type="checkbox" name="' + service.name + '" id="' + service.name + '"/>');
+	if(service.search_tags || service.search_artist) {
+		$('#available_services').append('<label for"' + service.name + '">' + service.name + '</label><input type="checkbox" name="' + service.name + '" id="' + service.name + '"/>');
+	}
 }
 
 var available_songs = {};
