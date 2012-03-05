@@ -1,3 +1,8 @@
+/*****************************************
+ * Enable using of window.location.origin 
+ *****************************************/
+if ( ! window.location.origin) window.location.origin = window.location.protocol+"//"+window.location.host+":" + window.location.port +"/";
+
 /****************************************************************
  * Avoid having IE break everything for having used console.log
  ****************************************************************/
