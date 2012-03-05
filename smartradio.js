@@ -16,8 +16,7 @@ function add_service(service) {
 				this_id = $(this).attr('id');
 				this_id = this_id.replace('_slider', '');
 
-				checkbox = $('#' + this_id);
-				console.log(checkbox);
+				checkbox = $('#' + this_id);				
 				if(!checkbox.prop('checked')) {
 					checkbox.prop('checked', true);
 				}
@@ -105,15 +104,20 @@ function build_song_info(song) {
 }
 
 function add_similar_songs() {
-	current_song.service.get_song_tags(current_song, function(tags) {
-		console.log("Found tags " + tags);
-		if(!tags) {
-			return;
-		}
-		$.each(tags, function(index, value) {
-			current_song.service.search_tags(value, add_songs);
+	$('#available_services :checked').each(function(index, value) {		
+		get_service($(this).attr('id')).get_song_tags(current_song, function(tags) {
+			console.log("Found tags " + tags);
+			if(!tags) {
+				return;
+			}
+			$.each(tags, function(index, value) {
+				current_song.service.search_tags(value, add_songs);
+			});
 		});
 	});
+	//current_song.service.get_song_tags(current_song, function(tags) {
+		
+	//});
 }
 
 function add_songs(songs) {

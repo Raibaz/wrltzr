@@ -6,8 +6,10 @@ var hype_machine = {
 		hype_machine.search_tags(query, callback);
 		hype_machine.search_artist(query, callback);
 	},
-	search_helper: function(url, callback) {
+	search_helper: function(url, callback) {		
 		$.getJSON(url, function(data) {
+			console.log("Hype machine response: ");
+			console.log(data);
 			if(!data || data.length == 0) {
 				callback(hype_machine.name);
 			}

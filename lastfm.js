@@ -51,8 +51,7 @@ var lastfm = {
 	get_song_tags: function(song, callback) {
 		if(song.service == lastfm && song.service_id) {
 			//TODO ricerca per mbid
-		} else {
-			console.log('get_song_tags');
+		} else {			
 			$.getJSON('http://ws.audioscrobbler.com/2.0/?method=track.getinfo&artist=' + escape(song.artist.name) + '&track=' + escape(song.name) + '&api_key=f1ad626c3a2d588bfd87788d38606b95&format=json', function(data) {	
 				tags = [];
 				if(!data.track || !data.track.toptags || !data.track.toptags.tag) {
