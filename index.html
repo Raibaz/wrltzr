@@ -66,14 +66,17 @@
 			
 			function skip_song() {
 				play_next_song();
+				return false;
 			}
 
 			function like_song() {
 				update_all_scores(1);			
+				return false;
 			}
 
 			function dislike_song() {
 				update_all_scores(-1);			
+				return false;
 			}
 		</script>
 
@@ -90,6 +93,8 @@
   			})();
 
 		</script>
+
+		<title>Project Wrltzr</title>
 		
 	</head>
 	<body>
@@ -107,8 +112,8 @@
 		<div id="bottom">
 			<div id="player">&nbsp;</div>
 			<div id="song_info">&nbsp</div>
-			<div id="song_commands">Like this song? <a id="like_song">Yes</a>/<a id="dislike_song">No</a></div>
-			<div id="commands">Next song: <span id="next_song_info">&nbsp;</span> <a id="skip_song">Play</a></div>
+			<div id="song_commands">Like this song? <a href id="like_song">Yes</a>/<a href id="dislike_song">No</a></div>
+			<div id="commands">Next song: <span id="next_song_info">&nbsp;</span> <a href id="skip_song">Play</a></div>
 		</div>
 		<ul id="results"/>
 	</body>
