@@ -76,7 +76,7 @@ var echonest = {
 		return 10 * (artist_hotttnesss + song_hotttnesss) * echonest.weight;
 	},
 	get_similar_artists: function(song, callback) {
-		$.getJSON('http://developer.echonest.com/api/v4/artist/similar?api_key=N6E4NIOVYMTHNDM8J&results=' + echonest.search_results_count + '&id=' + escape(song.artist.service_id), function(data) {
+		$.getJSON('http://developer.echonest.com/api/v4/artist/similar?api_key=N6E4NIOVYMTHNDM8J&results=5&id=' + escape(song.artist.service_id), function(data) {
 			console.log("Similar artists");
 			console.log(data);
 			response = data.response;
