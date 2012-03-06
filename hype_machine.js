@@ -50,7 +50,8 @@ var hype_machine = {
 	},
 	compute_score: function(service_song) {
 		posted_count_modifier = 0.1;
-		return ((hype_machine.search_results_count - service_song.index) + (service_song.posted_count * posted_count_modifier)) * hype_machine.weight;
+		ret = ((hype_machine.search_results_count - service_song.index) + (service_song.posted_count * posted_count_modifier)) * hype_machine.weight;
+		return ret;		
 	},
 	get_song_tags: function(song, callback) {
 		if(song.service == hype_machine) {
