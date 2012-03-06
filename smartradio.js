@@ -104,14 +104,23 @@ function build_song_info(song) {
 }
 
 function add_similar_songs() {
-	$('#available_services :checked').each(function(index, value) {		
-		get_service($(this).attr('id')).get_song_tags(current_song, function(tags) {
+	$('#available_services :checked').each(function(index, value) {
+		service = get_service($(this).attr('id'));
+		if(service.get_similar_artists) {			
+			service.get_similar_artists(current_song, function(artists) {
+				console.log("Found similar artists: " + artists);
+				$.each(artists, function(index, value) {
+					service.search_artist(value, add_songs);
+				});
+			});
+		}
+		service.get_song_tags(current_song, function(tags) {
 			console.log("Found tags " + tags);
 			if(!tags) {
 				return;
 			}
 			$.each(tags, function(index, value) {
-				current_song.service.search_tags(value, add_songs);
+				service.search_tags(value, add_songs);
 			});
 		});
 	});
