@@ -8,6 +8,29 @@ var available_songs_count = 0;
 var played_songs = [];
 var current_song;
 var next_song;
+var same_artist_bump = 2;
+
+function init_settings() {
+	$('#artist_bump').slider({
+		orientation: "vertical",
+		min: 0,
+		max: 9,
+		step: 1,
+		value: 9 - same_artist_bump,
+		animate: true,
+		slide: function(event, ui) {			
+			new_bump = 10 - ui.value;
+			for(key in available_songs) {
+				cur_song = available_songs[key];
+				if(cur_song.artist.name === current_song.artist.name || cur_song.artist.name === $('#tags').val()) {
+					console.log("Bumping song " + key);
+					cur_song.score = cur_song.score / same_artist_bump * new_bump;
+				}
+			}
+			same_artist_bump = new_bump;
+		}
+	});
+}
 
 function add_service(service) {
 	if(service.search_tags || service.search_artist) {
@@ -19,6 +42,7 @@ function add_service(service) {
 			max: 5,
 			step: 0.1,
 			value: service.weight,
+			animate: true,
 			slide: function(event, ui) {								
 				this_id = $(this).attr('id');
 				this_id = this_id.replace('_slider', '');
@@ -134,8 +158,18 @@ function add_songs(songs) {
 			available_songs[value.key].score += value.score;
 			//TODO if there is a better embed, replace it it
 		} else {
-			available_songs[value.key] = value
+			available_songs[value.key] = value;
 			available_songs_count++;
+		}
+
+		if(current_song && current_song.artist.name === value.artist.name) {
+			console.log("Adding a song from current artist ==> score bump!");
+			available_songs[value.key].score *= same_artist_bump;
+		}
+
+		if(value.artist.name === $('#tags').val()) {
+			console.log("Adding a song by searched artist ==> score bump!");
+			available_songs[value.key].score *= same_artist_bump;
 		}
 
 		if(played_songs[value.key]) {
@@ -198,7 +232,7 @@ function update_all_scores(coeff) {
 						artist_coeff = 1;
 						if($('#search_type').val() === 'artist' && value.artist.name === current_song.artist.name) {
 							console.log("Further bump for same artist");
-							artist_coeff = 2;
+							artist_coeff = same_artist_bump;
 						}
 						console.log("Updating score for " + value.key + " by adding " + (value.score * coeff * artist_coeff));
 						available_songs[value.key].score += (value.score * coeff * artist_coeff);

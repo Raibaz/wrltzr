@@ -23,12 +23,20 @@
 
 #top #user-inputs #available_services {
 	height: 130px;
+	float: left;
+	width: 50%;
 }
 
 #top #user-inputs #available_services .service {
 	height: 100%;
 	width: 120px;
 	float: left;
+}
+
+#top #user-inputs #settings {
+	height: 130px;
+	float: left;
+	width: 20%;
 }
 
 .result {
