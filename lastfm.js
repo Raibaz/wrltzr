@@ -48,6 +48,9 @@ var lastfm = {
 	compute_score: function(service_song) {
 		return (lastfm.search_results_count - service_song['@attr'].rank) * lastfm.weight;
 	},
+	get_similar_artists: function(song, callback) {
+		
+	}
 	get_song_tags: function(song, callback) {
 		if(song.service == lastfm && song.service_id) {
 			//TODO ricerca per mbid
