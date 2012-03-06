@@ -25,6 +25,9 @@ var echonest = {
 		$.getJSON('http://developer.echonest.com/api/v4/artist/search?api_key=N6E4NIOVYMTHNDM8J&bucket=familiarity&bucket=hotttnesss&bucket=video&results=' + echonest.search_results_count + '&name=' + escape(query), function(data) {
 			console.log(data);
 			response = data.response;
+			if(!response || !response.artists || response.artists.length == 0) {
+				callback(echonest.name);
+			}
 			results = new Array();
 			lookup_service = get_service('youtube');
 			$.each(response.artists, function(index, value) {

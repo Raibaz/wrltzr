@@ -21,11 +21,12 @@
 				$('#skip_song').click(skip_song);
 				$('#like_song').click(like_song);
 				$('#dislike_song').click(dislike_song);
+				$('#play_random_song').click(do_play_random_song);
 				$.getScript('smartradio.js', function() {
 					console.log('finished loading smartradio.js');
 				});
 			});
-			
+		
 			function do_search_tags() {
 				$('#results').html('');
 				$('#commands').show();
@@ -84,6 +85,11 @@
 				update_all_scores(-1);			
 				return false;
 			}
+
+			function do_play_random_song() {
+				play_random_song();
+				return false;
+			}
 		</script>
 
 		<script type="text/javascript">
@@ -119,7 +125,10 @@
 			<div id="player">&nbsp;</div>
 			<div id="song_info">&nbsp</div>
 			<div id="song_commands">Like this song? <a href id="like_song">Yes</a>/<a href id="dislike_song">No</a></div>
-			<div id="commands">Next song: <span id="next_song_info">&nbsp;</span> <a href id="skip_song">Play</a></div>
+			<div id="commands">
+					<div id="next_song">Next song: <span id="next_song_info">&nbsp;</span> <a href id="skip_song">Play</a></div>
+					<div id="random_song">Play a <a href id="play_random_song">random song</a></div>
+			</div>
 		</div>
 		<ul id="results"/>
 	</body>

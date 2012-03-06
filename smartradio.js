@@ -2,6 +2,13 @@ $.getScript('api.js', function() {
 	console.log('finished loading api.js');	
 });
 
+
+var available_songs = {};
+var available_songs_count = 0;
+var played_songs = [];
+var current_song;
+var next_song;
+
 function add_service(service) {
 	if(service.search_tags || service.search_artist) {
 		$('#available_services').append('<span class="service"><label for"' + service.name + '">' + service.name + '</label><input type="checkbox" name="' + service.name + '" id="' + service.name + '"/><div id="' + service.name + '_slider" class="service-weight-slider"/></span>');		
@@ -28,12 +35,6 @@ function add_service(service) {
 		});
 	}
 }
-
-var available_songs = {};
-var played_songs = [];
-var current_song;
-var next_song;
-var player_playing = false;
 
 function compute_next_song() {
 	found = undefined;
@@ -124,9 +125,6 @@ function add_similar_songs() {
 			});
 		});
 	});
-	//current_song.service.get_song_tags(current_song, function(tags) {
-		
-	//});
 }
 
 function add_songs(songs) {
@@ -136,7 +134,8 @@ function add_songs(songs) {
 			available_songs[value.key].score += value.score;
 			//TODO if there is a better embed, replace it it
 		} else {
-			available_songs[value.key] = value;
+			available_songs[value.key] = value
+			available_songs_count++;
 		}
 
 		if(played_songs[value.key]) {
@@ -226,4 +225,22 @@ function recompute_scores(service, new_weight) {
 	service.weight = new_weight;
 	if(available_songs)
 	compute_next_song();
+}
+
+function play_random_song() {
+	var song_index = Math.floor(Math.random() * available_songs_count);	
+	for(key in available_songs) {
+		console.log("Song index = " + song_index);
+		if(!available_songs.hasOwnProperty(key)) {
+			continue;
+		}
+		if(played_songs[key]) {
+			continue;
+		}
+		if(song_index-- <= 0) {
+			next_song = available_songs[key];
+			play_next_song();
+			break;
+		}
+	}
 }
