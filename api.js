@@ -20,6 +20,11 @@ $.getScript('soundcloud.js', function() {
 	add_service(sound_cloud);
 });
 
+$.getScript('echonest.js', function() {
+	console.log('loaded echonest.js');
+	add_service(echonest);
+});
+
 var get_service = function(service_name) {
 	return available_services[service_name];
 }
