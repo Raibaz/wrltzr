@@ -27,16 +27,23 @@ var echonest = {
 			response = data.response;
 			if(!response || !response.artists || response.artists.length == 0) {
 				callback(echonest.name);
+				return;
 			}
 			results = new Array();
 			lookup_service = get_service('youtube');
 			$.each(response.artists, function(index, value) {
-				$.each(value.video, function(video_index, video_value) {
-					echonest.build_song_from_video(value, video_value, lookup_service, function(song) {
-						results.push(song);
-					});
-				});				
+				if(value.video != undefined && value.video.length > 0) {
+					$.each(value.video, function(video_index, video_value) {
+						echonest.build_song_from_video(value, video_value, lookup_service, function(song) {
+							results.push(song);
+						});
+					});				
+				} 
 			});
+			if(results.length == 0) {
+				callback(echonest.name);
+				return;
+			}
 			callback(results);
 		});		
 	},	
