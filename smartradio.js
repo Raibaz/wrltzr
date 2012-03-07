@@ -4,7 +4,6 @@ $.getScript('api.js', function() {
 
 
 var available_songs = {};
-var available_songs_count = 0;
 var played_songs = [];
 var current_song;
 var next_song;
@@ -155,19 +154,18 @@ function add_songs(songs) {
 	$.each(results, function(index, value) {
 		if(available_songs[value.key]) {
 			console.log("Found song " + value.key + ", adding " + value.score + " to its score");
-			available_songs[value.key].score += value.score;
+			available_songs[value.key].score += value.score;			
 			//TODO if there is a better embed, replace it it
 		} else {
-			available_songs[value.key] = value;
-			available_songs_count++;
+			available_songs[value.key] = value;			
 		}
 
 		if(current_song && current_song.artist.name === value.artist.name) {
 			console.log("Adding a song from current artist ==> score bump!");
-			available_songs[value.key].score *= same_artist_bump;
+			available_songs[value.key].score *= same_artist_bump;			
 		}
 
-		if(value.artist.name === $('#tags').val()) {
+		if(value.artist.name === $('#tags').val() && $('#search_type').val() === 'artist') {
 			console.log("Adding a song by searched artist ==> score bump!");
 			available_songs[value.key].score *= same_artist_bump;
 		}
@@ -262,9 +260,14 @@ function recompute_scores(service, new_weight) {
 }
 
 function play_random_song() {
-	var song_index = Math.floor(Math.random() * available_songs_count);	
+	var available_songs_count = 0;
 	for(key in available_songs) {
-		console.log("Song index = " + song_index);
+		if(available_songs.hasOwnProperty(key)) {
+			available_songs_count++;
+		}
+	}
+	var song_index = Math.floor(Math.random() * available_songs_count);	
+	for(key in available_songs) {		
 		if(!available_songs.hasOwnProperty(key)) {
 			continue;
 		}
@@ -274,6 +277,12 @@ function play_random_song() {
 		if(song_index-- <= 0) {
 			next_song = available_songs[key];
 			play_next_song();
+			available_songs = {};
+			available_songs_count = 0;
+			played_songs = {};
+			$('#results').empty();
+			add_similar_songs();
+			compute_next_song();
 			break;
 		}
 	}
