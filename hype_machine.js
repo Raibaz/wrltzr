@@ -10,8 +10,10 @@ var hype_machine = {
 		$.getJSON(url, function(data) {
 			console.log("Hype machine response: ");
 			console.log(data);
-			if(!data || data.length == 0) {
+			if(!data || data.length == 0 || data[0] == undefined) {
+				console.log("Nothing found on hypem");
 				callback(hype_machine.name);
+				return;
 			}
 			results = new Array();
 			lookup_service = get_service('youtube');
