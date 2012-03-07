@@ -309,3 +309,8 @@ function reload_embed() {
 		}
 	});
 }
+
+function delete_next_song() {
+	delete available_songs[next_song.key];
+	compute_next_song();
+}
