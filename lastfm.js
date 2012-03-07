@@ -9,17 +9,24 @@ var lastfm = {
 	search_helper: function(url, callback) {
 		$.getJSON(url, function(data) {			
 			console.log(data);
-			if(!data.toptracks.track || data.toptracks.track.length == 0) {				
+			if(data.toptracks.track == undefined || data.toptracks.track.length == 0) {				
 				callback(lastfm.name);
 				return;
 			}
 			results = new Array();
 			var lookup_service = get_service('youtube');
-			$.each(data.toptracks.track, function(index, value) {				
-				lastfm.build_song(value, lookup_service, function(song) {
-					results.push(song);					
-				});
-			});				
+			if(data.toptracks.track.name != undefined) {
+				//Single track
+				lastfm.build_song(data.toptracks.track, lookup_service, function(song) {
+					results.push(song);
+				})
+			} else {
+				$.each(data.toptracks.track, function(index, value) {				
+					lastfm.build_song(value, lookup_service, function(song) {
+						results.push(song);					
+					});
+				});				
+			}
 			callback(results);
 		});
 	},
