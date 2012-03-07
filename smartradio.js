@@ -121,6 +121,12 @@ function play_next_song() {
 }
 
 function build_song_info(song) {
+
+	if(song.embed.service.search_another_embed == undefined) {
+		$('#change_embed').hide();
+	} else {
+		$('#change_embed').show();
+	}
 	ret =  '<div class="track-info">' + song.artist.name + " - " + song.name + '</div>';
 	ret += '<div class="service-info">Found via ' + song.service.name + '</div>';
 	return ret;
@@ -286,4 +292,20 @@ function play_random_song() {
 			break;
 		}
 	}
+}
+
+function reload_embed() {
+	console.log("reload_embed");
+	current_song.embed.service.search_another_embed(current_song.embed, function(new_embed) {
+		console.log("Found other embed");
+		console.log(new_embed);
+		if(!new_embed || new_embed == undefined) {
+			delete available_songs[current_song.key];
+			play_next_song();
+		} else {
+			current_song.embed.code = new_embed.code;
+			next_song = current_song;
+			play_next_song();
+		}
+	});
 }

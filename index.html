@@ -22,6 +22,7 @@
 				$('#like_song').click(like_song);
 				$('#dislike_song').click(dislike_song);
 				$('#play_random_song').click(do_play_random_song);
+				$('#reload_embed').click(do_reload_embed);
 				$.getScript('smartradio.js', function() {
 					console.log('finished loading smartradio.js');
 					init_settings();
@@ -91,6 +92,11 @@
 				play_random_song();
 				return false;
 			}
+
+			function do_reload_embed() {
+				reload_embed();
+				return false;
+			}
 		</script>
 
 		<script type="text/javascript">
@@ -129,6 +135,7 @@
 			<div id="song_commands">Like this song? <a href id="like_song">Yes</a>/<a href id="dislike_song">No</a></div>
 			<div id="commands">
 					<div id="next_song">Next song: <span id="next_song_info">&nbsp;</span> <a href id="skip_song">Play</a></div>
+					<div id="change_embed">Not the right song for this title? <a href id="reload_embed">Search for it again</a></div>
 					<div id="random_song">Play a <a href id="play_random_song">random song</a></div>
 			</div>
 		</div>
