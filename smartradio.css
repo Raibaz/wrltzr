@@ -1,12 +1,11 @@
 #top {
-	width: 100%;
-	float: left;
+	height: 350px;
 }
 
-#top #heading {
+/*#top #heading {
 	width: 40%;
 	float: left;
-}
+}*/
 
 #top #heading h1 {
 	border: none;
@@ -15,21 +14,28 @@
 	padding: 0px 40px;	
 }
 
-#top #user-inputs {
+/*#top #user-inputs {
 	width: 60%;
 	float: left;
 	margin: 80px 0px;
 }
 
-#top #user-inputs #available_services {
-	height: 130px;
-}
+#top #user-inputs #available_services {	
+	float: left;
+	width: 50%;
+}*/
 
-#top #user-inputs #available_services .service {
-	height: 100%;
+.service {
+	height: 130px;
 	width: 120px;
 	float: left;
 }
+
+/*#top #user-inputs #settings {
+	height: 130px;
+	float: left;
+	width: 20%;
+}*/
 
 .result {
 	list-style-type: none;
@@ -46,30 +52,30 @@
 	width: 50%;
 }
 
-#player {
-	width: 40%;
-	float: left;
-}
-
 #song_info {
 	display: none;
-	width: 60%;
+	width: 100%;
 	float: left;
 }
 
 #song_commands {
 	display: none;
-	width: 60%;
+	width: 100%;
 	float: left;
 }
 
 #commands {
 	display: none;
 	float: left;
-	width: 60%;
+	width: 100%;
 }
 
 #results {
 	width: 100%;
 	float: left;
+}
+
+.sc-time-span {
+	/* Needed to override bootstrap floating classes called span* */
+	float: none !important;
 }

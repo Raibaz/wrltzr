@@ -9,17 +9,24 @@ var lastfm = {
 	search_helper: function(url, callback) {
 		$.getJSON(url, function(data) {			
 			console.log(data);
-			if(!data.toptracks.track || data.toptracks.track.length == 0) {				
+			if(data.toptracks.track == undefined || data.toptracks.track.length == 0) {				
 				callback(lastfm.name);
 				return;
 			}
 			results = new Array();
 			var lookup_service = get_service('youtube');
-			$.each(data.toptracks.track, function(index, value) {				
-				lastfm.build_song(value, lookup_service, function(song) {
-					results.push(song);					
-				});
-			});				
+			if(data.toptracks.track.name != undefined) {
+				//Single track
+				lastfm.build_song(data.toptracks.track, lookup_service, function(song) {
+					results.push(song);
+				})
+			} else {
+				$.each(data.toptracks.track, function(index, value) {				
+					lastfm.build_song(value, lookup_service, function(song) {
+						results.push(song);					
+					});
+				});				
+			}
 			callback(results);
 		});
 	},
@@ -49,7 +56,7 @@ var lastfm = {
 		return (lastfm.search_results_count - service_song['@attr'].rank) * lastfm.weight;
 	},
 	get_similar_artists: function(song, callback) {
-		$.getJSON('http://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist=' + escape(song.artist.name) + '&limit=' + lastfm.search_results_count + '&api_key=f1ad626c3a2d588bfd87788d38606b95&format=json', function(data) {	
+		$.getJSON('http://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist=' + escape(song.artist.name) + '&limit=5&api_key=f1ad626c3a2d588bfd87788d38606b95&format=json', function(data) {	
 			results = new Array();
 			console.log("Lastfm similar artists: ");
 			console.log(data);
