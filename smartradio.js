@@ -33,7 +33,7 @@ function init_settings() {
 
 function add_service(service) {
 	if(service.search_tags || service.search_artist) {
-		$('#available_services').append('<span class="service"><label for"' + service.name + '">' + service.name + '</label><input type="checkbox" name="' + service.name + '" id="' + service.name + '"/><div id="' + service.name + '_slider" class="service-weight-slider"/></span>');		
+		$('#available_services').append('<span class="service"><label for="' + service.name + '">' + service.name + '</label><div id="' + service.name + '_slider" class="service-weight-slider"/><input type="checkbox" checked name="' + service.name + '" id="' + service.name + '"/></span>');		
 		console.log("Service " + service.name + " has default weight " + service.weight);
 		$('#' + service.name + "_slider").slider({
 			orientation: "vertical",
