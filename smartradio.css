@@ -24,7 +24,9 @@
 	float: left;
 	width: 50%;
 }*/
-
+#bottom {
+	height: 350px;
+}
 .service {
 	height: 130px;
 	width: 120px;
