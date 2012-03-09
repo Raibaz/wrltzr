@@ -1,43 +1,52 @@
-#top {
-	height: 350px;
+body {
+	background: #ffffff url(img/bg.jpg) repeat top left;
 }
 
-/*#top #heading {
-	width: 40%;
-	float: left;
-}*/
+body, label, h1, h2, h3 {	
+	color: #cccccc;
+}
+
+#top {
+	height: 350px;
+	margin-top: 100px;
+}
+
+#modal_whats_this {
+	background-color: #2C2C2C;
+	color: #cccccc;
+}
 
 #top #heading h1 {
 	border: none;
 	font-family: Helvetica, Arial, sans-serif;
 	font-size: 128px;
 	padding: 0px 40px;	
+	color: #eeeeee;
 }
 
-/*#top #user-inputs {
-	width: 60%;
-	float: left;
-	margin: 80px 0px;
+#controls {
+	height: 200px;
 }
 
-#top #user-inputs #available_services {	
-	float: left;
-	width: 50%;
-}*/
+#controls .sliders {
+	height: 100%;
+	border: 1px solid #cccccc;
+}
+
+#available_services {	
+	height: 100%;
+}
+
 #bottom {
 	height: 350px;
+	margin-top: 50px;
 }
 .service {
 	height: 130px;
-	width: 120px;
+	width: 100px;
 	float: left;
+	padding: 10px;
 }
-
-/*#top #user-inputs #settings {
-	height: 130px;
-	float: left;
-	width: 20%;
-}*/
 
 .result {
 	list-style-type: none;
@@ -75,6 +84,7 @@
 #results {
 	width: 100%;
 	float: left;
+	display: none;
 }
 
 .sc-time-span {
