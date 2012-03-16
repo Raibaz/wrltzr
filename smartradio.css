@@ -91,3 +91,7 @@ body, label, h1, h2, h3 {
 	/* Needed to override bootstrap floating classes called span* */
 	float: none !important;
 }
+
+#footer {
+	margin-top: 80px;
+}
