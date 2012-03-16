@@ -129,6 +129,11 @@ function build_song_info(song) {
 	}
 	ret =  '<div class="track-info">' + song.artist.name + " - " + song.name + '</div>';
 	ret += '<div class="service-info">Found via ' + song.service.name + '</div>';
+
+	$('#twitter-share-button').attr('data-url', 'http://raibaz.github.com/wrltzr');
+	$('#twitter-share-button').attr('data-text', 'I just listened to ' + song.name + ' by ' + song.artist.name + ' on Wrltzr!');
+	!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+
 	return ret;
 
 }
