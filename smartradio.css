@@ -24,6 +24,14 @@ body, label, h1, h2, h3 {
 	color: #eeeeee;
 }
 
+#user-inputs .control-label {
+	text-align: left;
+}
+
+#search_tags {
+	width: 380px;
+}
+
 #controls {
 	height: 200px;
 }
