@@ -7,7 +7,7 @@ var available_songs = {};
 var played_songs = [];
 var current_song;
 var next_song;
-var same_artist_bump = 2;
+var same_artist_bump = 6;
 
 function init_settings() {
 	$('#artist_bump').slider({
