@@ -2,6 +2,7 @@ var echonest = {
 	name: "Echonest",
 	search_results_count: 20,
 	weight: 2.5,
+	tooltip_text: "The echonest is a music knowledge platform powered by MIT, Columbia and Berkeley R&D providing lots of information about many kinds of music; thus, search results provided by The echo nest are generally very reliable, even if sometimes a little shifted towards mainstream music.",
 	api_key: "HXMAGYP12YUFX9IMV",
 	search_all: function(query, callback) {
 		echonest.search_tags(query, callback);
