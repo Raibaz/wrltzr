@@ -7,7 +7,7 @@ body, label, h1, h2, h3 {
 }
 
 #top {
-	height: 350px;
+	height: 450px;
 	margin-top: 100px;
 }
 
@@ -46,8 +46,7 @@ body, label, h1, h2, h3 {
 }
 
 #bottom {
-	height: 350px;
-	margin-top: 50px;
+	height: 350px;	
 }
 .service {
 	height: 130px;
@@ -101,5 +100,5 @@ body, label, h1, h2, h3 {
 }
 
 #footer {
-	margin-top: 80px;
+	margin-top: 40px;
 }

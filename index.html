@@ -26,6 +26,7 @@
 		<script type="text/javascript">
 			$(document).ready(function() {
 				$('#search_tags').click(do_search_tags);
+				$('#user-inputs').submit(do_search_tags);
 				$('#skip_song').click(skip_song);
 				$('#delete_next_song').click(do_delete_next_song);
 				$('#like_song').click(like_song);
@@ -52,9 +53,9 @@
 						get_service($(this).attr('name')).search_tags($('#query').val(), search_callback);
 					} else {
 						get_service($(this).attr('name')).search_all($('#query').val(), search_callback);
-					}
-					
+					}					
 				});
+				return false;
 			}
 
 			function search_callback(results) {												
