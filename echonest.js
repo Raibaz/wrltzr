@@ -40,7 +40,7 @@ var echonest = {
 						});
 					});				
 				} 
-			});
+			});			
 			if(results.length == 0) {
 				callback(echonest.name);
 				return;
@@ -48,7 +48,7 @@ var echonest = {
 			callback(results);
 		});		
 	},	
-	build_song: function(service_song, lookup_service, callback) {
+	build_song: function(service_song, lookup_service, artist_index, song_index, callback) {
 		ret = {
 			key: service_song.artist_name + "_" + service_song.title,
 			service: echonest,
@@ -60,7 +60,7 @@ var echonest = {
 			}, embed: {
 				service: lookup_service,
 				key: service_song.artist_name + " " + service_song.title
-			}, score: echonest.compute_score(service_song.artist_hotttnesss, service_song.song_hotttnesss)
+			}, score: echonest.compute_score(service_song.artist_hotttnesss, service_song.song_hotttnesss, artist_index, song_index)
 		};
 		callback(ret);
 	},
