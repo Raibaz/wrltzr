@@ -15,7 +15,7 @@ var echonest = {
 			results = new Array();
 			lookup_service = get_service('youtube');
 			$.each(response.songs, function(index, value) {
-				echonest.build_song(value, lookup_service, function(song) {
+				echonest.build_song(value, lookup_service, index, index, function(song) {
 					results.push(song);
 				})
 			});
@@ -35,7 +35,7 @@ var echonest = {
 			$.each(response.artists, function(index, value) {
 				if(value.video != undefined && value.video.length > 0) {
 					$.each(value.video, function(video_index, video_value) {
-						echonest.build_song_from_video(value, video_value, lookup_service, function(song) {
+						echonest.build_song_from_video(value, video_value, lookup_service, index, video_index, function(song) {
 							results.push(song);
 						});
 					});				
@@ -64,7 +64,7 @@ var echonest = {
 		};
 		callback(ret);
 	},
-	build_song_from_video: function(service_artist, service_song, lookup_service, callback) {
+	build_song_from_video: function(service_artist, service_song, lookup_service, artist_index, song_index, callback) {
 		ret = {
 			key: service_artist.name + "_" + service_song.title,
 			service: echonest,
@@ -76,15 +76,19 @@ var echonest = {
 			}, embed: {
 				service: lookup_service,
 				key: echonest.extract_youtube_id_from_video_url(service_song.url)
-			}, score: echonest.compute_score(service_artist.hotttnesss, 0)
+			}, score: echonest.compute_score(service_artist.hotttnesss, 0, artist_index, song_index)
 		}
 		callback(ret);
 	},
 	extract_youtube_id_from_video_url: function(url) {
 		return url.replace("http://www.youtube.com/watch?v=", "");
 	},
-	compute_score: function(artist_hotttnesss, song_hotttnesss) {
-		return 10 * (artist_hotttnesss + song_hotttnesss) * echonest.weight;
+	compute_score: function(artist_hotttnesss, song_hotttnesss, artist_index, song_index) {
+		if(global_configuration.use_normalized_scores) {
+			return Math.floor(((echonest.search_results_count - artist_index) + (echonest.search_results_count - song_index)) / 2) * echonest.weight;
+		} else {
+			return 10 * (artist_hotttnesss + song_hotttnesss) * echonest.weight;
+		}
 	},
 	get_similar_artists: function(song, callback) {
 		$.getJSON('http://developer.echonest.com/api/v4/artist/similar?api_key=N6E4NIOVYMTHNDM8J&results=5&id=' + escape(song.artist.service_id), function(data) {

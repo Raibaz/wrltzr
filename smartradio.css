@@ -88,6 +88,14 @@ body, label, h1, h2, h3 {
 	width: 100%;
 }
 
+#settings .settings-icon {
+	margin-top: 5px;
+}
+
+#settings #scoring-buttons {
+	margin-top: 15px;
+}
+
 #results {
 	width: 100%;
 	float: left;
@@ -100,5 +108,5 @@ body, label, h1, h2, h3 {
 }
 
 #footer {
-	margin-top: 40px;
+	margin-top: 4ec0px;
 }

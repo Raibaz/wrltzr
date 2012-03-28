@@ -16,6 +16,7 @@ var sound_cloud = {
 	},
 	search_helper: function(url, callback) {
 		$.getJSON(url, function(data) {
+			console.log(data);
 			if(!data || data.length == 0) {
 				callback(sound_cloud.name);
 			}
@@ -23,7 +24,7 @@ var sound_cloud = {
 				results = new Array();
 				lookup_service = get_service('Soundcloud');
 				$.each(data, function(index, value) {
-					sound_cloud.build_song(value, lookup_service, function(song) {					
+					sound_cloud.build_song(value, lookup_service, index, function(song) {					
 						results.push(song);
 					});
 				});
@@ -31,7 +32,7 @@ var sound_cloud = {
 			callback(results);
 		});
 	},
-	build_song: function(service_song, lookup_service, callback) {
+	build_song: function(service_song, lookup_service, index, callback) {
 		ret = {
 			key: service_song.user.username + "_" + service_song.title,
 			name: service_song.title,
@@ -39,7 +40,7 @@ var sound_cloud = {
 			artist: {
 				name: service_song.user.username
 			},
-			score: sound_cloud.compute_score(service_song),
+			score: sound_cloud.compute_score(service_song, index),
 			embed: {
 				key: service_song.permalink_url,
 				service: lookup_service,
@@ -50,8 +51,12 @@ var sound_cloud = {
 		};
 		callback(ret);
 	},	
-	compute_score: function(service_song) {
-		return (service_song.playback_count / 1000) + (service_song.favoritings_count / 100);
+	compute_score: function(service_song, index) {
+		if(global_configuration.use_normalized_scores) {
+			return sound_cloud.search_results_count - index;
+		} else {
+			return (service_song.playback_count / 1000) + (service_song.favoritings_count / 100);
+		}
 	},
 	search_embed: function(embed, callback) {		
 		resp = {

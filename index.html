@@ -6,19 +6,19 @@
 		<meta property="og:url" content="http://raibaz.github.com/wrltzr"/>
 		<script src="util/console.js" type="text/javascript"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-		<script src="http://www.youtube.com/player_api" type="text/javascript"></script>				
+		<script async src="http://www.youtube.com/player_api" type="text/javascript"></script>				
 		
 		<!-- Soundcloud custom player -->
 		<link rel="stylesheet" href="lib/soundcloud/sc-player-standard.css"/>				
-		<script src="lib/soundcloud/soundcloud.player.api.js" type="text/javascript"></script>
-		<script src="lib/soundcloud/sc-player.js" type="text/javascript"></script>
+		<script async src="lib/soundcloud/soundcloud.player.api.js" type="text/javascript"></script>
+		<script async src="lib/soundcloud/sc-player.js" type="text/javascript"></script>
 
 		<!-- jQuery UI -->
 		<script src="lib/jquery-ui/jquery-ui-1.8.18.custom.min.js" type="text/javascript"></script>
 		<link rel="stylesheet" href="lib/jquery-ui/overcast/jquery-ui-1.8.18.custom.css"/>
 
 		<!-- Bootstrap -->
-		<script src="lib/bootstrap/bootstrap.min.js" type="text/javascript"></script>
+		<script async src="lib/bootstrap/bootstrap.min.js" type="text/javascript"></script>
 		<link rel="stylesheet" href="lib/bootstrap/bootstrap.min.css"/>
 
 		<link rel="stylesheet" href="smartradio.css">
@@ -33,6 +33,8 @@
 				$('#dislike_song').click(dislike_song);
 				$('#play_random_song').click(do_play_random_song);
 				$('#reload_embed').click(do_reload_embed);
+				$('#use_simple_scores').click(do_use_simple_scores);
+				$('#use_complex_scores').click(do_use_complex_scores);
 				$.getScript('smartradio.js', function() {
 					console.log('finished loading smartradio.js');
 					init_settings();
@@ -112,6 +114,22 @@
 				reload_embed();
 				return false;
 			}
+
+			function do_use_simple_scores() {			
+				$('#use_simple_scores').button('toggle');	
+				global_configuration.use_normalized_scores = true;
+				add_similar_songs();				
+				compute_next_song();
+				return false;
+			}
+
+			function do_use_complex_scores() {	
+				$('#use_complex_scores').button('toggle');
+				global_configuration.use_normalized_scores = false;				
+				add_similar_songs();
+				compute_next_song();
+				return false;
+			}
 		</script>
 
 		<script type="text/javascript">
@@ -173,10 +191,17 @@
 						<fieldset id="available_services">&nbsp;</fieldset>			
 					</div>
 					<div class="span4 sliders">
-						<fieldset id="settings" class="span2">
+						<fieldset id="settings" class="span4">
 							<span class="service">
-								<span>Impress me!</span><div style="margin-top: 5px"><i class="icon-question-sign icon-white service-icon" title="Do you want to listen to stuff that closely resembles what you searched for, or are you open to serendipity and music you probably didn't know of? Use this slider to control the nature of your music stream"></i></div><div id="artist_bump">&nbsp;</div><span>Stick to what i asked for</span>
-							</span>							
+								<span>Impress me!</span><div class="settings-icon"><i class="icon-question-sign icon-white service-icon" title="Do you want to listen to stuff that closely resembles what you searched for, or are you open to serendipity and music you probably didn't know of? Use this slider to control the nature of your music stream"></i></div><div id="artist_bump">&nbsp;</div><span>Stick to what i asked for</span>
+							</span>			
+							<span class="service">
+								<span>Scoring method:</span><div class="settings-icon"><i class="icon-question-sign icon-white service-icon" title="If set to 'simple', the choice of the next song to play will take into account only the order in which songs are returned by each service when searching; Otherwise, if set to 'complex', it will take into account more complex parameters when available, such as the number of users favoriting each song or the song hotness, as returned by the services."></i></div>
+								<div class="btn-group" id="scoring-buttons" data-toggle="buttons-radio">
+									<button class="btn btn-inverse btn-mini active" id="use_simple_scores">Simple</button>
+									<button class="btn btn-inverse btn-mini" id="use_complex_scores">Complex</button>
+								</div>
+							</span>				
 						</fieldset>
 					</div>
 				</div>

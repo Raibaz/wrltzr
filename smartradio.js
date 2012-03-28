@@ -9,6 +9,10 @@ var current_song;
 var next_song;
 var same_artist_bump = 6;
 
+var global_configuration = {
+	use_normalized_scores: true
+};
+
 function init_settings() {
 	$('#artist_bump').slider({
 		orientation: "vertical",
@@ -137,6 +141,9 @@ function build_song_info(song) {
 }
 
 function add_similar_songs() {
+	if(!current_song || current_song == undefined) {
+		return;
+	}
 	$('#available_services :checked').each(function(index, value) {
 		service = get_service($(this).attr('id'));
 		if(service.get_similar_artists) {			

@@ -52,8 +52,11 @@ var hype_machine = {
 		callback(ret);
 	},
 	compute_score: function(service_song) {
-		posted_count_modifier = 0.1;
-		ret = ((hype_machine.search_results_count - service_song.index) + (service_song.posted_count * posted_count_modifier)) * hype_machine.weight;
+		ret = (hype_machine.search_results_count - service_song.index) * hype_machine.weight;
+		if(global_configuration.use_normalized_scores) {
+			var posted_count_modifier = 0.1;
+		 	ret += (service_song.posted_count * posted_count_modifier) * hype_machine.weight;
+		}
 		return ret;		
 	},
 	get_song_tags: function(song, callback) {
