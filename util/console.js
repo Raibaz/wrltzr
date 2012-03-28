@@ -7,7 +7,7 @@ if ( ! window.location.origin) window.location.origin = window.location.protocol
  * Avoid having IE break everything for having used console.log
  ****************************************************************/
 
-var alertFallback = true;
+var alertFallback = false;
 if (typeof console === "undefined" || typeof console.log === "undefined" || typeof console.info === "undefined" ) {
  console = {};
  if (alertFallback) {
