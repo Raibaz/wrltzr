@@ -46,9 +46,9 @@
 				$('#commands').show();
 				$('#song_commands').show();
 				available_songs = {};
+				search_type = $('#search_type').val();					
 				$('#available_services :checked').each(function(index, value) {
-					$(this).attr('pending', 'true');
-					search_type = $('#search_type').val();					
+					$(this).attr('pending', 'true');					
 					if(search_type == "artist") {
 						get_service($(this).attr('name')).search_artist($('#query').val(), search_callback);
 					} else if(search_type == 'tag') {
@@ -57,12 +57,12 @@
 						get_service($(this).attr('name')).search_all($('#query').val(), search_callback);
 					}					
 				});
+				_gaq.push(['_trackEvent', 'user_inputs', 'search', $('#query').val() + "_" + search_type, 0, true]);				
 				return false;
 			}
 
 			function search_callback(results) {												
-				if(typeof(results) == 'string') {
-					
+				if(typeof(results) == 'string' ) {				
 					$('#'+results).removeAttr('pending');
 					return;
 				}
@@ -86,32 +86,38 @@
 			}
 			
 			function skip_song() {
-				play_next_song();
+				play_next_song();				
+				_gaq.push(['_trackEvent', 'user_inputs', 'skip_song', current_song.key]);				
 				return false;
 			}
 
 			function do_delete_next_song() {
 				delete_next_song();
+				_gaq.push(['_trackEvent', 'user_inputs', 'delete_next_song', next_song.key, 0, true]);				
 				return false;
 			}
 
 			function like_song() {
 				update_all_scores(1);			
+				_gaq.push(['_trackEvent', 'user_inputs', 'like_song', current_song.key, 0, true]);				
 				return false;
 			}
 
 			function dislike_song() {
 				update_all_scores(-1);			
+				_gaq.push(['_trackEvent', 'user_inputs', 'dislike_song', current_song.key, 0, true]);				
 				return false;
 			}
 
 			function do_play_random_song() {
 				play_random_song();
+				_gaq.push(['_trackEvent', 'user_inputs', 'play_random_song', current_song.key, 0, true]);				
 				return false;
 			}
 
 			function do_reload_embed() {
 				reload_embed();
+				_gaq.push(['_trackEvent', 'user_inputs', 'reload_embed', current_song.key, 0, true]);				
 				return false;
 			}
 
