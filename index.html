@@ -87,7 +87,7 @@
 			
 			function skip_song() {
 				play_next_song();				
-				_gaq.push(['_trackEvent', 'user_inputs', 'skip_song', current_song.key]);				
+				_gaq.push(['_trackEvent', 'user_inputs', 'skip_song', current_song.key, 0, true]);				
 				return false;
 			}
 

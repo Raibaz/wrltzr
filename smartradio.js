@@ -78,8 +78,7 @@ function compute_next_song() {
 	}
 }
 
-function play_next_song() {
-	console.log("play_next_song");
+function play_next_song() {	
 	current_song = next_song;
 	next_song = undefined;
 	delete available_songs[current_song.key];
@@ -216,6 +215,7 @@ function start_youtube_player() {
 			}, 'onStateChange': function(event) {
 				if(event.data === YT.PlayerState.ENDED) {
 					play_next_song();
+					_gaq.push(['_trackEvent', 'user_inputs', 'song_finished', current_song.key, 0, true]);				
 				}
 			}
 		}
@@ -232,6 +232,7 @@ function start_soundcloud_player(embed) {
 		apiKey: sound_cloud.client_id,
 		onPlayerTrackFinish: function() {
 			play_next_song();
+			_gaq.push(['_trackEvent', 'user_inputs', 'song_finished', current_song.key, 0, true]);				
 		}
 	});
 
