@@ -1,7 +1,7 @@
 var hype_machine = {
 	name: "Hypemachine",
 	search_results_count: 20,
-	weight: 0.75,
+	weight: 3,
 	tooltip_text: "The Hype machine is a music blog aggregator whose main goal is to discover new music trends by scouting what gets promoted by popular and underground music blogs. Music found through The Hype machine is typically newish and quasi-mainstream, or soon to be mainstream, or at least quite famous in the indie circuit.",
 	search_all: function(query, callback) {		
 		hype_machine.search_tags(query, callback);

@@ -31,6 +31,7 @@ function init_settings() {
 				}
 			}
 			same_artist_bump = new_bump;
+			compute_next_song();
 		}
 	});
 }

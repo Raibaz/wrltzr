@@ -44,6 +44,11 @@
 			});
 		
 			function do_search_tags() {
+				var query = $('#query').val();
+				if(query.length == 0) {
+					return;
+				}				
+				console.log(query);
 				$('#results').html('');
 				$('#song-data').show();
 				$('#commands').show();
@@ -53,14 +58,14 @@
 				$('#available_services :checked').each(function(index, value) {
 					$(this).attr('pending', 'true');					
 					if(search_type == "artist") {
-						get_service($(this).attr('name')).search_artist($('#query').val(), search_callback);
+						get_service($(this).attr('name')).search_artist(query, search_callback);
 					} else if(search_type == 'tag') {
-						get_service($(this).attr('name')).search_tags($('#query').val(), search_callback);
+						get_service($(this).attr('name')).search_tags(query, search_callback);
 					} else {
-						get_service($(this).attr('name')).search_all($('#query').val(), search_callback);
+						get_service($(this).attr('name')).search_all(query, search_callback);
 					}					
 				});
-				_gaq.push(['_trackEvent', 'user_inputs', 'search', $('#query').val() + "_" + search_type, 0, true]);				
+				_gaq.push(['_trackEvent', 'user_inputs', 'search', query + "_" + search_type, 0, true]);				
 				return false;
 			}
 

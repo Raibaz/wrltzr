@@ -1,7 +1,7 @@
 var lastfm = {
 	name: "lastfm",
 	search_results_count: 20,
-	weight: 1,
+	weight: 4,
 	tooltip_text: "Last.fm is a social music discovery service which allows users to share their listenings with their friends and to discover new music that, according to other users, may satisfy their taste. Since the description of songs, tags and artists is user-generated, sometimes music associations don't seem to make much sense, and mainstream pop will likely appear in your search results for Last.fm; however, its database is enormous so expect to find almost anything.",
 	search_all: function(query, callback) {
 		lastfm.search_tags(query, callback);

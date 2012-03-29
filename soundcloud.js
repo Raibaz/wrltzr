@@ -2,7 +2,7 @@ var sound_cloud = {
 	name: "Soundcloud",
 	search_results_count: 20,
 	client_id: 'bbddf35ebd6e8fedb840ed23f1c0e7ec',
-	weight: 2,
+	weight: 1,
 	tooltip_text: "Soundcloud is a music sharing service aimed primarily to producers and record labels, who share their own productions and remixes; thus, most of the music found via Soundcloud is relatively new, sometimes quite underground and often geared towards electronic",
 	search_all: function(query, callback) {
 		sound_cloud.search_artist(query, callback);
