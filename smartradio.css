@@ -6,14 +6,23 @@ body, label, h1, h2, h3 {
 	color: #cccccc;
 }
 
+.social-sharers {
+	padding-left: 23px;
+	height: 30px;
+}
+
 #top {
 	height: 450px;
-	margin-top: 100px;
+	margin-top: 60px;
 }
 
 #modal_whats_this {
 	background-color: #2C2C2C;
 	color: #cccccc;
+}
+
+#top #heading {
+	padding: 50px 11px;
 }
 
 #top #heading h1 {
@@ -28,17 +37,34 @@ body, label, h1, h2, h3 {
 	text-align: left;
 }
 
+#user-inputs .controls {
+	margin-left: 140px;
+}
+
+#query {
+	width: 140px;
+}
+
+#search_type {
+	width: 150px;
+}
+
 #search_tags {
-	width: 380px;
+	width: 98%;
 }
 
 #controls {
-	height: 200px;
+	height: 180px;
 }
 
 #controls .sliders {
 	height: 100%;
-	border: 1px solid #cccccc;
+}
+
+.well {
+	border: 1px solid #aaaaaa;
+	background-color: #2C2C2C;
+	padding: 10px;
 }
 
 #available_services {	
@@ -52,12 +78,18 @@ body, label, h1, h2, h3 {
 	height: 130px;
 	width: 100px;
 	float: left;
-	padding: 10px;
+	padding: 5px 10px;
 }
 
 .result {
 	list-style-type: none;
 	width: 100%;
+}
+
+#song-data {
+	display: none;
+	margin-left: 42px;
+	height: 165px;
 }
 
 .song_info {
@@ -93,7 +125,7 @@ body, label, h1, h2, h3 {
 }
 
 #settings #scoring-buttons {
-	margin-top: 15px;
+	margin-top: 5px;
 }
 
 #results {
@@ -108,5 +140,5 @@ body, label, h1, h2, h3 {
 }
 
 #footer {
-	margin-top: 4ec0px;
+	margin-top: 80px;
 }
