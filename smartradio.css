@@ -85,6 +85,17 @@ div#___plusone_0 {
 	padding: 5px 10px;
 }
 
+.service .ui-widget-content {
+	background: none;
+	border: 1px solid #999;
+}
+
+.ui-slider .ui-slider-handle {
+	background: url(img/fader.jpg);
+	border: none;
+	width: 19px;
+	height: 28px;
+}
 .result {
 	list-style-type: none;
 	width: 100%;
