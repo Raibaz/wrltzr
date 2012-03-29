@@ -63,12 +63,14 @@
 
 			function search_callback(results) {												
 				if(typeof(results) == 'string' ) {				
-					$('#'+results).removeAttr('pending');
-					return;
-				}
-				add_songs(results);
-				$('#' + results[0].service.name).removeAttr('pending');
-				console.log("Removed pending for service " + results[0].service.name);
+					$('#'+results).removeAttr('pending');					
+					console.log("Removed pending for service " + results);
+				} else {
+					add_songs(results);
+					$('#' + results[0].service.name).removeAttr('pending');
+					console.log("Removed pending for service " + results[0].service.name);
+				}				
+				
 				var can_go = true;
 				$('#available_services :checked').each(function(index, value) {
 					if($(this).attr('pending')) {
