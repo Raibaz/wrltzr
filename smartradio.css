@@ -143,6 +143,15 @@ body, label, h1, h2, h3 {
 	margin-top: 5px;
 }
 
+#player {
+	height: 200px;
+}
+
+#ads {
+	display: none;
+	padding-left: 23px;
+}
+
 #results {
 	width: 100%;
 	float: left;
