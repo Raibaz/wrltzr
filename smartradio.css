@@ -11,6 +11,10 @@ body, label, h1, h2, h3 {
 	height: 30px;
 }
 
+div#___plusone_0 {
+  vertical-align: bottom !important;
+}
+
 #top {
 	height: 450px;
 	margin-top: 60px;
