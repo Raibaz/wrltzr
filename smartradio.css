@@ -11,8 +11,8 @@ body, label, h1, h2, h3 {
 	height: 30px;
 }
 
-div#___plusone_0 {
-  vertical-align: bottom !important;
+.social-sharers div {
+	vertical-align: top !important;
 }
 
 #top {
