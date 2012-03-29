@@ -147,6 +147,10 @@ function add_similar_songs() {
 		service = get_service($(this).attr('id'));
 		if(service.get_similar_artists) {			
 			service.get_similar_artists(current_song, function(artists) {
+				if(typeof(artists) == 'string') {
+					console.log("No similar artists found on " + artists + " for " + current_song.key);
+					return;
+				}
 				console.log("Found similar artists: " + artists);
 				$.each(artists, function(index, value) {
 					service.search_artist(value, add_songs);

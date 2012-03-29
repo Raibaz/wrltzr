@@ -61,6 +61,10 @@ var lastfm = {
 			results = new Array();
 			console.log("Lastfm similar artists: ");
 			console.log(data);
+			if(data.similarartists == undefined || data.similarartists.artist == undefined) {
+				callback(lastfm.name);
+				return;
+			}
 			$.each(data.similarartists.artist, function(index, value) {
 				results.push(value.name);
 			});
@@ -71,6 +75,7 @@ var lastfm = {
 		if(song.service == lastfm && song.service_id) {
 			//TODO ricerca per mbid
 		} else {			
+			console.log(song);
 			$.getJSON('http://ws.audioscrobbler.com/2.0/?method=track.getinfo&artist=' + escape(song.artist.name) + '&track=' + escape(song.name) + '&api_key=f1ad626c3a2d588bfd87788d38606b95&format=json', function(data) {	
 				tags = [];
 				if(!data.track || !data.track.toptags || !data.track.toptags.tag) {
