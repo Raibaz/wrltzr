@@ -6,13 +6,8 @@ body, label, h1, h2, h3 {
 	color: #cccccc;
 }
 
-.social-sharers {
-	padding-left: 23px;
-	height: 30px;
-}
-
-.social-sharers div {
-	vertical-align: top !important;
+.social-sharers li div {
+	margin-top: 10px !important;
 }
 
 #top {
