@@ -9,8 +9,8 @@ var lastfm = {
 	},
 	search_helper: function(url, callback) {
 		$.getJSON(url, function(data) {			
-			console.log(data);
-			if(data.toptracks.track == undefined || data.toptracks.track.length == 0) {				
+			console.log(data);		
+			if(data.toptracks == undefined || data.toptracks.track == undefined || data.toptracks.track.length == 0) {				
 				callback(lastfm.name);
 				return;
 			}
