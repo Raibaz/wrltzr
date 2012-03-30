@@ -1,5 +1,6 @@
 $.getScript('api.js', function() {
 	console.log('finished loading api.js');	
+	setTimeout(parse_query, 2000);
 });
 
 
@@ -134,7 +135,7 @@ function build_song_info(song) {
 	ret =  '<div class="track-info">' + song.artist.name + " - " + song.name + '</div>';
 	ret += '<div class="service-info">Found via ' + song.service.name + '</div>';
 
-	$('#twitter-iframe').attr('src', '//platform.twitter.com/widgets/tweet_button.html?url=http://raibaz.github.com/wrltzr&text=I%20just%20listened%20to%20' + escape(song.name) + '%20by%20' + escape(song.artist.name) + '%20on%20%23Wrltzr&count=none');
+	$('#twitter-iframe').attr('src', '//platform.twitter.com/widgets/tweet_button.html?url=' + encodeURIComponent('http://raibaz.github.com/wrltzr/?q=' + current_song.key.replace(' ', "_")) + '&text=I%20just%20listened%20to%20' + escape(song.name) + '%20by%20' + escape(song.artist.name) + '%20on%20%23Wrltzr&count=none');
 
 	return ret;
 
@@ -329,4 +330,26 @@ function reload_embed() {
 function delete_next_song() {
 	delete available_songs[next_song.key];
 	compute_next_song();
+}
+
+function parse_query() {
+	var url_song = get_url_song();
+	if(url_song != undefined) {
+		$('#query').val(url_song);
+		do_search_tags();
+	}
+}
+
+function get_url_song() {	
+	var query = location.search.substring(1);
+	if(query) {
+		query_params = query.split('&');		
+		for(i in query_params) {			
+			cur = query_params[i];
+			cur.replace('&', '');
+			if(cur.indexOf('q=') != -1) {
+				return cur.replace('q=', '').split('_').join(' ');
+			}
+		}
+	}
 }
