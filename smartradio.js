@@ -35,6 +35,7 @@ function init_settings() {
 			compute_next_song();
 		}
 	});
+	//setInterval(show_motivational_modal, 150000);
 }
 
 function add_service(service) {
@@ -355,4 +356,13 @@ function get_url_song() {
 			}
 		}
 	}
+}
+
+function show_motivational_modal() {
+	$('#modal_motivational').modal('show');
+	setTimeout(hide_motivational_modal, 5000);
+}
+
+function hide_motivational_modal() {
+	$('#modal_motivational').modal('hide');
 }

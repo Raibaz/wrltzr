@@ -36,7 +36,7 @@
 				$('#play_random_song').click(do_play_random_song);
 				$('#reload_embed').click(do_reload_embed);
 				$('#use_simple_scores').click(do_use_simple_scores);
-				$('#use_complex_scores').click(do_use_complex_scores);
+				$('#use_complex_scores').click(do_use_complex_scores);				
 				$.getScript('smartradio.js', function() {
 					console.log('finished loading smartradio.js');
 					init_settings();
@@ -268,9 +268,17 @@
 				<h2>What's this?</h2>
 			</div>
 			<div class="modal-body">
-				Wrltzr (pronounced "Wurlitzer") is a project for a smart radio that combines intelligence for many music streaming services, attempting to give you the best possible music stream related to what you want to listen to.<br/>
+				Wrltzr (pronounced "Wurlitzer", like the famous jukebox brand) is a project for a smart radio that combines intelligence for many music streaming services, attempting to give you the best possible music stream related to what you want to listen to.<br/>
 				Using a single service often provides a limited experience, due to users tagging music without any sense or to music catalogs being too limited; by combining knowledge coming from different services, Project Wrltzr is able to provide you a coherent yet serendipitous listening experience.<br/>
 				Please note, however, that this is a project under <strong>heavy</strong> development, so expect new features and bugs to come and go at a quick pace, and if you want, please provide support, contributions or ideas: they will be extremely welcome.
+			</div>
+		</div>
+		<div class="modal fade" id="modal_motivational">
+			<div class="modal-header">
+				<h2>Do you like this radio?</h2>
+			</div>
+			<div class="modal-body">
+				Please, take some time to support this project by clicking on one of the ads. Show me some love!
 			</div>
 		</div>
 		<script type="text/javascript">
