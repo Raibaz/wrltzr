@@ -109,7 +109,11 @@
 			}
 
 			function like_song() {
-				update_all_scores(1);			
+				update_all_scores(1);		
+				$('#like_song').tooltip('show');
+				setTimeout(function() {
+					$('#like_song').tooltip('hide');
+				}, 2500);
 				_gaq.push(['_trackEvent', 'user_inputs', 'like_song', current_song.key, 0, true]);				
 				return false;
 			}
@@ -117,6 +121,10 @@
 			function dislike_song() {
 				current_song.disliked = true;
 				update_all_scores(-1);			
+				$('#dislike_song').tooltip('show');
+				setTimeout(function() {
+					$('#dislike_song').tooltip('hide');
+				}, 2500);
 				_gaq.push(['_trackEvent', 'user_inputs', 'dislike_song', current_song.key, 0, true]);				
 				return false;
 			}
@@ -232,7 +240,7 @@
 				<div id="player" class="span7">&nbsp;</div>
 				<div class="span4 well" id="song-data">
 					<div id="song_info">&nbsp</div>
-					<div id="song_commands">Like this song? <a href id="like_song">Yes</a>/<a href id="dislike_song">No</a></div>
+					<div id="song_commands">Like this song? <a href id="like_song" title="Ok, you will probably listen to more songs like this one!" data-trigger="manual">Yes</a>/<a href id="dislike_song" title="Ok, you won't hear this song again and similar ones will be less likely to appear!" data-trigger="manual">No</a></div>
 					<div id="commands">
 						<div id="next_song">Next song: <span id="next_song_info">&nbsp;</span> <a href id="skip_song">Play</a> / <a href id="delete_next_song">Delete</a></div>
 						<div id="change_embed">Not the right song for this title? <a href id="reload_embed">Search for it again</a></div>
