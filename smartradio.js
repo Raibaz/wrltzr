@@ -68,6 +68,9 @@ function add_service(service) {
 function compute_next_song() {
 	found = undefined;
 	$.each(available_songs, function(index, value) {
+		if(value.deleted || value.disliked) {			
+			return true;
+		}
 		if(!found || found.score < value.score) {
 			found = value;
 		}
@@ -328,7 +331,7 @@ function reload_embed() {
 }
 
 function delete_next_song() {
-	delete available_songs[next_song.key];
+	available_songs[next_song.key].deleted = true;
 	compute_next_song();
 }
 

@@ -115,6 +115,7 @@
 			}
 
 			function dislike_song() {
+				current_song.disliked = true;
 				update_all_scores(-1);			
 				_gaq.push(['_trackEvent', 'user_inputs', 'dislike_song', current_song.key, 0, true]);				
 				return false;
