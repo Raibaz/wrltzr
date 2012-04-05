@@ -25,6 +25,11 @@ $.getScript('echonest.js', function() {
 	add_service(echonest);
 });
 
+$.getScript('exfm.js', function() {
+	console.log('loaded exfm.js');
+	add_service(exfm);
+});
+
 var get_service = function(service_name) {
 	return available_services[service_name];
 }
