@@ -40,7 +40,7 @@ function init_settings() {
 
 function add_service(service) {
 	if(service.search_tags || service.search_artist) {
-		$('#available_services').append('<span class="service"><label for="' + service.name + '">' + service.name + '</label><i class="icon-question-sign icon-white service-icon" title="' + service.tooltip_text + '"></i><div id="' + service.name + '_slider" class="service-weight-slider"/><input type="checkbox" checked name="' + service.name + '" id="' + service.name + '"/></span>');		
+		$('#available_services').append('<span class="service"><label for="' + service.name + '">' + service.name + '</label><div id="' + service.name + '_slider" class="service-weight-slider"/><div><input type="checkbox" checked name="' + service.name + '" id="' + service.name + '"/></div><i class="icon-question-sign icon-white service-icon" title="' + service.tooltip_text + '"></i></span>');		
 		$('.service-icon').tooltip();
 		$('#' + service.name + "_slider").slider({
 			orientation: "vertical",
@@ -249,25 +249,44 @@ function start_soundcloud_player(embed) {
 }
 
 function update_all_scores(coeff) {
-	current_song.service.get_song_tags(current_song, function(tags) {
-		$.each(tags, function(index, value) {
-			current_song.service.search_tags(value, function(songs) {
-				$.each(songs, function(index, value) {					
-					if(available_songs[value.key]) {
-						artist_coeff = 1;
-						if($('#search_type').val() === 'artist' && value.artist.name === current_song.artist.name) {
-							console.log("Further bump for same artist");
-							artist_coeff = same_artist_bump;
+	if(current_song.service.get_song_tags) {
+		current_song.service.get_song_tags(current_song, function(tags) {
+			$.each(tags, function(index, value) {
+				current_song.service.search_tags(value, function(songs) {
+					$.each(songs, function(index, value) {					
+						if(available_songs[value.key]) {
+							artist_coeff = 1;
+							if($('#search_type').val() === 'artist' && value.artist.name === current_song.artist.name) {
+								console.log("Further bump for same artist");
+								artist_coeff = same_artist_bump;
+							}
+							console.log("Updating score for " + value.key + " by adding " + (value.score * coeff * artist_coeff));
+							available_songs[value.key].score += (value.score * coeff * artist_coeff);
 						}
-						console.log("Updating score for " + value.key + " by adding " + (value.score * coeff * artist_coeff));
-						available_songs[value.key].score += (value.score * coeff * artist_coeff);
-					}
-				});
-				//TODO: this should be at the end of all tags, not here at the end of every tag				
-				compute_next_song();				
-			})
+					});
+					//TODO: this should be at the end of all tags, not here at the end of every tag				
+					compute_next_song();				
+				})
+			});
 		});
-	});
+	} else {
+		current_song.service.get_similar_artists(current_song, function(artists) {						
+			$.each(artists, function(index, value) {				
+				console.log(value);
+				for(cur in available_songs) {
+					if(!available_songs.hasOwnProperty(cur)) {
+						continue;
+					}
+					song = available_songs[cur];						
+					if(song.artist && song.artist.name == value) {
+						console.log("Changing score for song " + song.key);
+						available_songs[song.key].score += value.score * coeff;
+					}
+				}
+			});
+			compute_next_song();
+		});
+	}
 }
 
 function recompute_scores(service, new_weight) {

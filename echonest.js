@@ -96,15 +96,12 @@ var echonest = {
 			console.log(data);
 			response = data.response;
 			ret = new Array();
-			$.each(response.artists, function(index, value) {
+			$.each(response.artists, function(index, value) {				
 				ret.push(value.name);
 			});
 			callback(ret);
 		});
-	},
-	get_song_tags: function(song, callback) {
-
-	}
+	}	
 };
 
 available_services['Echonest'] = echonest;
