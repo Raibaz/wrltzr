@@ -8,14 +8,17 @@ var exfm = {
 		exfm.search_tags(query, callback);
 	},
 	search_tags: function(query, callback) {
-		exfm.search_helper('http://ex.fm/api/v3/trending/tag/' + escape(query) + '?results=20', callback);
+		exfm.search_helper('http://ex.fm/api/v3/trending/tag/' + encodeURIComponent(query) + '?results=20', callback);
 	},
 	search_artist: function(url, callback) {
-		exfm.search_helper('http://ex.fm/api/v3/song/search/' + escape(query) + '?results=20', callback);
+		exfm.search_helper('http://ex.fm/api/v3/song/search/' + encodeURIComponent(query) + '?results=20', callback);
 	},
 	search_helper: function(url, callback) {
 		$.getJSON(url, function(data) {
 			console.log(data);
+			if(data.songs == undefined || data.songs.length <= 0) {
+				callback(exfm.name);
+			}
 			results = new Array();
 			lookup_service = get_service('youtube');
 			$.each(data.songs, function(index, value) {

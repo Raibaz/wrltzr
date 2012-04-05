@@ -163,15 +163,17 @@ function add_similar_songs() {
 				});
 			});
 		}
-		service.get_song_tags(current_song, function(tags) {
-			console.log("Found tags " + tags);
-			if(!tags) {
-				return;
-			}
-			$.each(tags, function(index, value) {
-				service.search_tags(value, add_songs);
+		else if(service.get_song_tags) {
+			service.get_song_tags(current_song, function(tags) {
+				console.log("Found tags " + tags);
+				if(!tags) {
+					return;
+				}
+				$.each(tags, function(index, value) {
+					service.search_tags(value, add_songs);
+				});
 			});
-		});
+		}
 	});
 }
 
