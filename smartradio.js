@@ -26,7 +26,10 @@ function init_settings() {
 			new_bump = 10 - ui.value;
 			for(key in available_songs) {
 				cur_song = available_songs[key];
-				if(cur_song.artist.name === current_song.artist.name || cur_song.artist.name === $('#tags').val()) {
+				if(cur_song.artist == undefined) {
+					continue;
+				}
+				if(current_song.artist != undefined && cur_song.artist.name === current_song.artist.name || cur_song.artist.name === $('#tags').val()) {
 					console.log("Bumping song " + key);
 					cur_song.score = cur_song.score / same_artist_bump * new_bump;
 				}
