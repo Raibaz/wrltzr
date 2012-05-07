@@ -15,6 +15,11 @@ body, label, h1, h2, h3 {
 	margin-top: 60px;
 }
 
+#logo {
+	display: inline;
+	width: 75px;
+}
+
 #modal_whats_this, #modal_motivational {
 	background-color: #2C2C2C;
 	color: #cccccc;
@@ -30,6 +35,7 @@ body, label, h1, h2, h3 {
 	font-size: 128px;
 	padding: 0px 40px;	
 	color: #eeeeee;
+	display: inline;
 }
 
 #user-inputs .control-label {
