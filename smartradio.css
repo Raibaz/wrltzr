@@ -1,5 +1,22 @@
 body {
-	background: #ffffff url(img/bg.jpg) repeat top left;
+	/*background: #ffffff url(img/bg.jpg) repeat top left;*/
+/* IE10 */ 
+background-image: -ms-linear-gradient(top, #000124 0%, #38697A 100%);
+
+/* Mozilla Firefox */ 
+background-image: -moz-linear-gradient(top, #000124 0%, #38697A 100%);
+
+/* Opera */ 
+background-image: -o-linear-gradient(top, #000124 0%, #38697A 100%);
+
+/* Webkit (Safari/Chrome 10) */ 
+background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #000124), color-stop(1, #38697A));
+
+/* Webkit (Chrome 11+) */ 
+background-image: -webkit-linear-gradient(top, #000124 0%, #38697A 100%);
+
+/* Proposed W3C Markup */ 
+background-image: linear-gradient(top, #000124 0%, #38697A 100%);
 }
 
 body, label, h1, h2, h3 {	
