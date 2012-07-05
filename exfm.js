@@ -18,6 +18,7 @@ var exfm = {
 			console.log(data);
 			if(data.songs == undefined || data.songs.length <= 0) {
 				callback(exfm.name);
+				return;
 			}
 			results = new Array();
 			lookup_service = get_service('youtube');
