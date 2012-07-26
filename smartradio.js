@@ -142,7 +142,10 @@ function build_song_info(song) {
 	ret =  '<div class="track-info">' + song.artist.name + " - " + song.name + '</div>';
 	ret += '<div class="service-info">Found via ' + song.service.name + '</div>';
 
-	$('#twitter-iframe').attr('src', '//platform.twitter.com/widgets/tweet_button.html?url=' + encodeURIComponent('http://raibaz.github.com/wrltzr/?q=' + current_song.key.replace(' ', "_")) + '&text=I%20just%20listened%20to%20' + escape(song.name) + '%20by%20' + escape(song.artist.name) + '%20on%20%23Wrltzr&count=none');
+	var url = encodeURIComponent('http://raibaz.github.com/wrltzr/?q=' + song.key.replace(' ', "_"));
+
+	$('#twitter-iframe').attr('src', '//platform.twitter.com/widgets/tweet_button.html?url=' + url + '&text=I%20just%20listened%20to%20' + escape(song.name) + '%20by%20' + escape(song.artist.name) + '%20on%20%23Wrltzr&count=none');
+	$('#facebook-share-link').attr('href', 'https://www.facebook.com/dialog/feed?app_id=393236134020452&link=' + url + '&picture=http://raibaz.github.com/wrltzr/img/logo_bg.png&name=' + escape(song.name) + '%20by%20' + escape(song.artist.name) + '&caption=I%20just%20listened%20to%20a%20song%20on%20Wrltzr&redirect_uri=http://raibaz.github.com/wrltzr');
 
 	return ret;
 
