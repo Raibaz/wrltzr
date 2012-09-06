@@ -23,6 +23,11 @@ body, label, h1, h2, h3 {
 	color: #cccccc;
 }
 
+hr {
+	color: #AAA;
+	margin: 10px 0;
+}
+
 .social-sharers li div {
 	margin-top: 10px !important;
 }
@@ -43,14 +48,14 @@ body, label, h1, h2, h3 {
 }
 
 #top #heading {
-	padding: 50px 11px;
+	/*padding: 0px 11px;*/
 }
 
 #top #heading h1 {
 	border: none;
 	font-family: Helvetica, Arial, sans-serif;
 	font-size: 128px;
-	padding: 0px 40px;	
+	padding: 0px 0 0 40px;	
 	color: #eeeeee;
 	display: inline;
 }
@@ -72,7 +77,11 @@ body, label, h1, h2, h3 {
 }
 
 #search_tags {
-	width: 98%;
+	width: 100%;
+}
+
+#controls #settings-well.sliders {
+	height: 165px;
 }
 
 #controls {
@@ -97,11 +106,21 @@ body, label, h1, h2, h3 {
 	height: 350px;	
 }
 .service {
-	height: 130px;
-	width: 80px;
+	height: 150px;
+	width: 50px;
 	float: left;
-	padding: 5px 10px;
+	padding: 5px 0px 5px 20px;
 }
+
+#settings .service {
+	width: 70px;
+}
+
+.service label, .service span {
+	font-size: 11px;
+	margin-left: -10px;
+}
+
 
 .service .ui-widget-content {
 	background: none;
@@ -121,24 +140,22 @@ body, label, h1, h2, h3 {
 
 #song-data {
 	display: none;
-	margin-left: 42px;
-	height: 180px;
+	margin-top: 16px;
+	height: 185px;
 }
 
-.song_info {
-	width: 50%;
-	float: left;
-}
-
-.youtube_player {
-	float: right;
-	width: 50%;
-}
+#youtube-player {
+	width: 100%;
+}	
 
 #song_info {
 	display: none;
 	width: 100%;
 	float: left;
+}
+
+.track-info {
+	font-style: italic;
 }
 
 #song_commands {
@@ -162,12 +179,12 @@ body, label, h1, h2, h3 {
 }
 
 #player {
-	height: 200px;
+	height: 350px;
 }
 
 #ads {
-	display: none;
-	padding-left: 23px;
+	/*display: none;*/
+	/*padding-left: 23px;*/
 }
 
 #results {

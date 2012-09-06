@@ -120,7 +120,8 @@ function play_next_song() {
 				current_song.embed.code = embed.code;
 				$('#player').html(embed.code);
 				$('#song_info').html(build_song_info(current_song)).show();
-				setTimeout(Mixeeba.refresh(), 2500);
+				Mixeeba.refresh();
+				setInterval(refreshMixeeba, 3000);
 				if(embed.service_name == get_service('youtube').name) {								
 					start_youtube_player();						
 				} else if(embed.service_name == get_service('Soundcloud').name) {					
@@ -133,6 +134,12 @@ function play_next_song() {
 	compute_next_song();
 }
 
+function refreshMixeeba() {
+	if($('.mixeeba-links').html() == '&nbsp;') {
+		Mixeeba.refresh();
+	}
+}
+
 function build_song_info(song) {
 
 	if(song.embed.service.search_another_embed == undefined) {
@@ -142,7 +149,7 @@ function build_song_info(song) {
 	}
 	ret =  '<div class="track-info"><span class="mixeeba-artist">' + song.artist.name + '</span> - <span class="mixeeba-title">' + song.name + '</span></div>';
 	ret += '<div class="service-info">Found via ' + song.service.name + '</div>';
-	ret += '<div class="mixeeba-links">&nbsp;</div>'
+	ret += '<div class="mixeeba-links">&nbsp;</div><hr/>'
 
 	var url = encodeURIComponent('http://raibaz.github.com/wrltzr/?q=' + song.key.replace(' ', "_"));
 
