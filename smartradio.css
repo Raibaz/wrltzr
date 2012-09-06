@@ -33,7 +33,7 @@ hr {
 }
 
 #top {
-	height: 650px;
+	height: 730px;
 	margin-top: 60px;
 }
 
@@ -199,6 +199,10 @@ hr {
 }
 
 #footer {
-	margin-top: 80px;
+	/*margin-top: 10px;*/
 	font-size: 11px;
+	float: left;
+	width: 100%;
+	padding-left: 10%;
+	margin-top: -15px;
 }
