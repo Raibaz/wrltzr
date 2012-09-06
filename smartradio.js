@@ -120,8 +120,7 @@ function play_next_song() {
 				current_song.embed.code = embed.code;
 				$('#player').html(embed.code);
 				$('#song_info').html(build_song_info(current_song)).show();
-				Mixeeba.go();
-				getTracklist({});
+				Mixeeba.refresh();
 				if(embed.service_name == get_service('youtube').name) {								
 					start_youtube_player();						
 				} else if(embed.service_name == get_service('Soundcloud').name) {					
