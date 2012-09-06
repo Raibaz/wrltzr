@@ -16,7 +16,7 @@ var youtube = {
 			callback();
 			return;
 		}
-		$.getJSON('https://gdata.youtube.com/feeds/api/videos?q=' + embed.key + '&orderby=relevance&v=2&max-results=' + max_results + '&alt=json&category=music', function(data) {					
+		$.getJSON('https://gdata.youtube.com/feeds/api/videos?q=' + encodeURIComponent(embed.key) + '&orderby=relevance&v=2&max-results=' + max_results + '&alt=json&category=music', function(data) {					
 			if(data.feed.openSearch$totalResults.$t == 0) {
 				callback();
 				return;
