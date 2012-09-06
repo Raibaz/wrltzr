@@ -1,8 +1,3 @@
-Hype machine: non ha i tag ma ha la ricerca per artista/titolo e l'api json: fatta sia la ricerca per artista/titolo che quella per tag, da migliorare
-Last.fm: api completa con ricerca per tag, similar artists, geo, group http://www.lastfm.it/api/account
 Grooveshark: api sia per la ricerca che per lo streaming http://developers.grooveshark.com/docs/public_api/v3/
 Mixcloud: ricerca per tag, artista, nome traccia: http://www.mixcloud.com/developers/documentation/
-Soundcloud: tuttecose http://developers.soundcloud.com/sdks
 Deezer: pare avere l'api per la ricerca, il servizio fa cagare ma tant'è http://www.deezer.com/it/developers/simpleapi/explorer
-Echonest: servizio di catalogone musicale, ha la ricerca complicatissima con mille parametri possibili, da usare sicuramente: http://the.echonest.com/
-Ex.fm: http://ex.fm/api da usare sicuramente
