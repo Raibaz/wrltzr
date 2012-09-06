@@ -22,6 +22,33 @@
 		<link rel="stylesheet" href="lib/bootstrap/bootstrap.min.css"/>
 
 		<link rel="stylesheet" href="smartradio.css">
+
+		<!-- Mixeeba integration -->
+		<script type='text/javascript'>
+
+
+		// Setup options (more in step 4 below)
+		 var opts = {
+		  _emailId : 'raibaz@gmail.com',
+		  _showFormat : false,
+		  };
+		 window._mixeebaify = opts;
+
+
+		// Add the Mixeeba JavaScript via an asynchronous script tag
+		 (function() {
+		  mixeebaScript = document.createElement('script');
+		  mixeebaScript.type = 'text/javascript';
+		  mixeebaScript.async = true;
+		  if (document.location.protocol == 'http:') {
+		   mixeebaScript.src = 'http://js.mixeeba.fm/track';
+		   s = document.getElementsByTagName('script')[0];
+		   s.parentNode.appendChild(mixeebaScript)
+		  }
+		 })();
+
+
+		</script>
 		
 		<script type="text/javascript">
 			$(document).ready(function() {
@@ -183,7 +210,7 @@
 			<div id="bottom" class="row">
 				<div id="player" class="span7">&nbsp;</div>
 				<div class="span5">
-					<div id="song_info">&nbsp</div>
+					<div id="song_info" class="mixeebaify-track">&nbsp</div>
 					<div id="song_commands">Like this song? <a href id="like_song">Yes</a>/<a href id="dislike_song">No</a></div>
 					<div id="commands">
 						<div id="next_song">Next song: <span id="next_song_info">&nbsp;</span> <a href id="skip_song">Play</a> / <a href id="delete_next_song">Delete</a></div>
