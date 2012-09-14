@@ -16,7 +16,7 @@ var global_configuration = {
 
 function init_settings() {
 	$('#artist_bump').slider({
-		orientation: "vertical",
+		orientation: "horizontal",
 		min: 0,
 		max: 9,
 		step: 1,
