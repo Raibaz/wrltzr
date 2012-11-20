@@ -193,11 +193,14 @@ function add_similar_songs() {
 }
 
 function add_songs(songs) {
-	$.each(results, function(index, value) {
+	$.each(songs, function(index, value) {
+		if(!value.key || value.key == 'undefined' || typeof(value.key) == undefined) {
+			return;
+		}
 		if(available_songs[value.key]) {
 			console.log("Found song " + value.key + ", adding " + value.score + " to its score");
 			available_songs[value.key].score += value.score;			
-			//TODO if there is a better embed, replace it it
+			//TODO if there is a better embed, replace it
 		} else {
 			available_songs[value.key] = value;			
 		}
