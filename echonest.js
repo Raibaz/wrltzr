@@ -1,4 +1,4 @@
-var echonest = {
+	var echonest = {
 	name: "Echonest",
 	search_results_count: 20,
 	weight: 2,
@@ -9,7 +9,7 @@ var echonest = {
 		echonest.search_artist(query, callback);
 	},
 	search_tags: function(tags, callback) {
-		$.getJSON('http://developer.echonest.com/api/v4/song/search?api_key=N6E4NIOVYMTHNDM8J&format=json&bucket=artist_hotttnesss&bucket=song_hotttnesss&sort=song_hotttnesss-desc&results=' + echonest.search_results_count + '&description=' + escape(tags) + '&style=' + escape(tags) + '&mood=' + escape(tags), function(data) {
+		$.getJSON('http://developer.echonest.com/api/v4/song/search?type=jsonp&api_key=N6E4NIOVYMTHNDM8J&format=json&bucket=artist_hotttnesss&bucket=song_hotttnesss&sort=song_hotttnesss-desc&results=' + echonest.search_results_count + '&description=' + escape(tags) + '&style=' + escape(tags) + '&mood=' + escape(tags), function(data) {
 			console.log(data);
 			response = data.response;
 			results = new Array();
@@ -23,7 +23,7 @@ var echonest = {
 		});
 	},
 	search_artist: function(query, callback) {
-		$.getJSON('http://developer.echonest.com/api/v4/artist/search?api_key=N6E4NIOVYMTHNDM8J&bucket=familiarity&bucket=hotttnesss&bucket=video&results=' + echonest.search_results_count + '&name=' + escape(query), function(data) {
+		$.getJSON('http://developer.echonest.com/api/v4/artist/search?type=jsonp&api_key=N6E4NIOVYMTHNDM8J&bucket=familiarity&bucket=hotttnesss&bucket=video&results=' + echonest.search_results_count + '&name=' + escape(query), function(data) {
 			console.log(data);
 			response = data.response;
 			if(!response || !response.artists || response.artists.length == 0) {
@@ -91,7 +91,7 @@ var echonest = {
 		}
 	},
 	get_similar_artists: function(song, callback) {
-		$.getJSON('http://developer.echonest.com/api/v4/artist/similar?api_key=N6E4NIOVYMTHNDM8J&results=5&id=' + escape(song.artist.service_id), function(data) {
+		$.getJSON('http://developer.echonest.com/api/v4/artist/similar?type=jsonp&api_key=N6E4NIOVYMTHNDM8J&results=5&id=' + escape(song.artist.service_id), function(data) {
 			console.log("Similar artists");
 			console.log(data);
 			response = data.response;
