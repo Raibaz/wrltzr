@@ -147,7 +147,7 @@ function build_song_info(song) {
 	} else {
 		$('#change_embed').show();
 	}
-	ret =  '<div class="track-info"><span class="mixeeba-artist">' + song.artist.name + '</span> - <span class="mixeeba-title">' + song.name + '</span></div>';
+	ret =  '<div class="track-info mixeebaify-track"><span class="mixeeba-artist">' + song.artist.name + '</span> - <span class="mixeeba-title">' + song.name + '</span></div>';
 	ret += '<div class="service-info">Found via ' + song.service.name + '</div>';
 	ret += '<div class="mixeeba-links">&nbsp;</div><hr/>'
 
