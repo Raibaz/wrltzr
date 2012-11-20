@@ -9,21 +9,24 @@
 		echonest.search_artist(query, callback);
 	},
 	search_tags: function(tags, callback) {
-		$.getJSON('http://developer.echonest.com/api/v4/song/search?type=jsonp&api_key=N6E4NIOVYMTHNDM8J&format=json&bucket=artist_hotttnesss&bucket=song_hotttnesss&sort=song_hotttnesss-desc&results=' + echonest.search_results_count + '&description=' + escape(tags) + '&style=' + escape(tags) + '&mood=' + escape(tags), function(data) {
-			console.log(data);
-			response = data.response;
-			results = new Array();
-			lookup_service = get_service('youtube');
-			$.each(response.songs, function(index, value) {
-				echonest.build_song(value, lookup_service, index, index, function(song) {
-					results.push(song);
-				})
-			});
-			callback(results);
+		$.ajax('http://developer.echonest.com/api/v4/song/search?type=jsonp&api_key=N6E4NIOVYMTHNDM8J&format=json&bucket=artist_hotttnesss&bucket=song_hotttnesss&sort=song_hotttnesss-desc&results=' + echonest.search_results_count + '&description=' + escape(tags) + '&style=' + escape(tags) + '&mood=' + escape(tags), {
+				success: function(data) {
+				console.log(data);
+				response = data.response;
+				results = new Array();
+				lookup_service = get_service('youtube');
+				$.each(response.songs, function(index, value) {
+					echonest.build_song(value, lookup_service, index, index, function(song) {
+						results.push(song);
+					})
+				});
+				callback(results);
+			}, dataType: 'jsonp'
 		});
 	},
 	search_artist: function(query, callback) {
-		$.getJSON('http://developer.echonest.com/api/v4/artist/search?type=jsonp&api_key=N6E4NIOVYMTHNDM8J&bucket=familiarity&bucket=hotttnesss&bucket=video&results=' + echonest.search_results_count + '&name=' + escape(query), function(data) {
+		$.getJSON('http://developer.echonest.com/api/v4/artist/search?type=jsonp&api_key=N6E4NIOVYMTHNDM8J&bucket=familiarity&bucket=hotttnesss&bucket=video&results=' + echonest.search_results_count + '&name=' + escape(query), {
+			success: function(data) {
 			console.log(data);
 			response = data.response;
 			if(!response || !response.artists || response.artists.length == 0) {
@@ -40,6 +43,7 @@
 						});
 					});				
 				} 
+			}, dataType: 'jsonp'
 			});			
 			if(results.length == 0) {
 				callback(echonest.name);
