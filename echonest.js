@@ -1,4 +1,4 @@
-	var echonest = {
+var echonest = {
 	name: "Echonest",
 	search_results_count: 20,
 	weight: 2,
@@ -9,8 +9,8 @@
 		echonest.search_artist(query, callback);
 	},
 	search_tags: function(tags, callback) {
-		$.ajax('http://developer.echonest.com/api/v4/song/search?type=jsonp&api_key=N6E4NIOVYMTHNDM8J&format=json&bucket=artist_hotttnesss&bucket=song_hotttnesss&sort=song_hotttnesss-desc&results=' + echonest.search_results_count + '&description=' + escape(tags) + '&style=' + escape(tags) + '&mood=' + escape(tags), {
-				success: function(data) {
+		$.getJSON('http://developer.echonest.com/api/v4/song/search?&api_key=HXMAGYP12YUFX9IMV&format=json&bucket=artist_hotttnesss&bucket=song_hotttnesss&sort=song_hotttnesss-desc&results=' + echonest.search_results_count + '&description=' + escape(tags) + '&style=' + escape(tags) + '&mood=' + escape(tags),
+		 function(data) {
 				console.log(data);
 				response = data.response;
 				results = new Array();
@@ -20,13 +20,12 @@
 						results.push(song);
 					})
 				});
-				callback(results);
-			}, dataType: 'jsonp'
-		});
+				callback(results);		
+		}).error(function(data) {callback(echonest.name)});
 	},
 	search_artist: function(query, callback) {
-		$.getJSON('http://developer.echonest.com/api/v4/artist/search?type=jsonp&api_key=N6E4NIOVYMTHNDM8J&bucket=familiarity&bucket=hotttnesss&bucket=video&results=' + echonest.search_results_count + '&name=' + escape(query), {
-			success: function(data) {
+		$.getJSON('http://developer.echonest.com/api/v4/artist/search?&api_key=HXMAGYP12YUFX9IMV&bucket=familiarity&bucket=hotttnesss&bucket=video&results=' + echonest.search_results_count + '&name=' + escape(query), 
+		function(data) {
 			console.log(data);
 			response = data.response;
 			if(!response || !response.artists || response.artists.length == 0) {
@@ -43,14 +42,13 @@
 						});
 					});				
 				} 
-			}, dataType: 'jsonp'
-			});			
+			});
 			if(results.length == 0) {
 				callback(echonest.name);
 				return;
 			}
-			callback(results);
-		});		
+			callback(results);		
+		}).error(function(data) {callback(echonest.name)});		
 	},	
 	build_song: function(service_song, lookup_service, artist_index, song_index, callback) {
 		ret = {
@@ -95,7 +93,7 @@
 		}
 	},
 	get_similar_artists: function(song, callback) {
-		$.getJSON('http://developer.echonest.com/api/v4/artist/similar?type=jsonp&api_key=N6E4NIOVYMTHNDM8J&results=5&id=' + escape(song.artist.service_id), function(data) {
+		$.getJSON('http://developer.echonest.com/api/v4/artist/similar?&api_key=HXMAGYP12YUFX9IMV&results=5&id=' + escape(song.artist.service_id), function(data) {
 			console.log("Similar artists");
 			console.log(data);
 			response = data.response;
@@ -104,7 +102,7 @@
 				ret.push(value.name);
 			});
 			callback(ret);
-		});
+		}).error(function(data){callback(echonest.name)});
 	}	
 };
 

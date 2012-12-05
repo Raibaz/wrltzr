@@ -52,7 +52,7 @@ var exfm = {
 		if(global_configuration.use_normalized_scores) {
 			return (exfm.search_results_count - index) * exfm.weight;
 		} else {
-			return 10 * (loved_count) * echonest.weight;
+			return 10 * (loved_count) * exfm.weight;
 		}
 	},
 	get_similar_artists: function(song, callback) {
