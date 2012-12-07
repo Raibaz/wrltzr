@@ -1,7 +1,7 @@
 var exfm = {
 	name: "Exfm",
 	search_results_count: 20,
-	weight: 2,
+	weight: 1,
 	tooltip_text: 'Ex.fm is a music discovery platform that scans through countless websites, blogs and tumblelogs to find new music; It offers features to find similar artists and song tags, so the associations it picks are likely to make sense.',
 	search_all: function(query, callback) {
 		exfm.search_artist(query, callback);
@@ -33,7 +33,7 @@ var exfm = {
 	build_song: function(service_song, lookup_service, index, callback) {
 		ret = {
 			key: service_song.artist + "_" + service_song.title,
-			service: exfm,
+			services: [exfm],
 			service_id: service_song.id,
 			name: service_song.title,
 			artist: {

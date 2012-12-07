@@ -1,7 +1,7 @@
 var echonest = {
 	name: "Echonest",
 	search_results_count: 20,
-	weight: 2,
+	weight: 1,
 	tooltip_text: "The echonest is a music knowledge platform powered by MIT, Columbia and Berkeley R&D providing lots of information about many kinds of music; thus, search results provided by The echo nest are generally very reliable, even if sometimes a little shifted towards mainstream music.",
 	api_key: "HXMAGYP12YUFX9IMV",
 	search_all: function(query, callback) {
@@ -53,7 +53,7 @@ var echonest = {
 	build_song: function(service_song, lookup_service, artist_index, song_index, callback) {
 		ret = {
 			key: service_song.artist_name + "_" + service_song.title,
-			service: echonest,
+			services: [echonest],
 			service_id: service_song.id,
 			name: service_song.title,
 			artist: {
@@ -69,7 +69,7 @@ var echonest = {
 	build_song_from_video: function(service_artist, service_song, lookup_service, artist_index, song_index, callback) {
 		ret = {
 			key: service_artist.name + "_" + service_song.title,
-			service: echonest,
+			services: [echonest],
 			service_id: service_song.id,
 			name: service_song.title,
 			artist: {

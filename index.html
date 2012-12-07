@@ -106,8 +106,8 @@
 					console.log("Removed pending for service " + results);
 				} else {
 					add_songs(results);
-					$('#' + results[0].service.name).removeAttr('pending');
-					console.log("Removed pending for service " + results[0].service.name);
+					$('#' + results[0].services[0].name).removeAttr('pending');
+					console.log("Removed pending for service " + results[0].services[0].name);
 				}				
 				
 				var can_go = true;

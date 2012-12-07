@@ -38,7 +38,23 @@ function init_settings() {
 			compute_next_song();
 		}
 	});
-	//setInterval(show_motivational_modal, 150000);
+	setInterval(show_motivational_modal, 150000);
+}
+
+function dump_songs() {
+	var next_song_score = Math.floor(next_song.score);
+	for(var i = next_song_score; i > 0; i--) {
+		var found = false;
+		for(j in available_songs) {
+			if(available_songs.hasOwnProperty(j) && available_songs[j] != undefined && available_songs[j].score == i) {
+				if(!found) {
+					console.log('Songs with score = ' + i);
+					found = true;
+				}				
+				console.log(available_songs[j].key + " from " + available_songs[j].services.map(function(cur){return cur.name;}));
+			} 
+		}
+	}
 }
 
 function add_service(service) {
@@ -148,7 +164,8 @@ function build_song_info(song) {
 		$('#change_embed').show();
 	}
 	ret =  '<div class="track-info mixeebaify-track"><span class="mixeeba-artist">' + song.artist.name + '</span> - <span class="mixeeba-title">' + song.name + '</span></div>';
-	ret += '<div class="service-info">Found via ' + song.service.name + '</div>';
+	var services_names = song.services.map(function(cur){return cur.name;});
+	ret += '<div class="service-info">Found via ' + services_names + '</div>';
 	ret += '<div class="mixeeba-links">&nbsp;</div><hr/>'
 
 	var url = encodeURIComponent('http://raibaz.github.com/wrltzr/?q=' + song.key.replace(' ', "_"));
@@ -199,7 +216,9 @@ function add_songs(songs) {
 		}
 		if(available_songs[value.key]) {
 			console.log("Found song " + value.key + ", adding " + value.score + " to its score");
-			available_songs[value.key].score += value.score;			
+			console.log(value.services);
+			available_songs[value.key].score += value.score;
+			available_songs[value.key].services.push(value.services[0]);			
 			//TODO if there is a better embed, replace it
 		} else {
 			available_songs[value.key] = value;			
@@ -220,7 +239,7 @@ function add_songs(songs) {
 			available_songs[value.key].score /= 5;
 		}
 		
-		var li_id = value.service.name + "_" + index;
+		var li_id = value.services[0].name + "_" + index;
 		if(value.artist && value.artist.name && value.name) {
 				li = '<li class="result" id="' + li_id + '"><span class="song_info">' + value.artist.name + " - " + value.name + '</span></li>';
 				$('#results').append(li);
@@ -315,7 +334,7 @@ function recompute_scores(service, new_weight) {
 			continue;
 		}
 		loop_song = available_songs[cur];
-		if(loop_song.service && loop_song.service.name == service.name) {
+		if(loop_song.service && loop_song.services[0].name == service.name) {
 			console.log("Updating score for " + cur + " from " + loop_song.score + " to " + ((loop_song.score / loop_song.service.weight) * new_weight));
 			loop_song.score = (loop_song.score / loop_song.service.weight) * new_weight;
 		}

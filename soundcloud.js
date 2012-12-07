@@ -36,7 +36,7 @@ var sound_cloud = {
 		ret = {
 			key: service_song.user.username + "_" + service_song.title,
 			name: service_song.title,
-			service: sound_cloud,
+			services: [sound_cloud],
 			artist: {
 				name: service_song.user.username
 			},
