@@ -25,12 +25,17 @@ $.getScript('echonest.js', function() {
 	add_service(echonest);
 });
 
-$.getScript('exfm.js', function() {
+/*$.getScript('exfm.js', function() {
 	console.log('loaded exfm.js');
 	add_service(exfm);
+});*/
+
+$.getScript('spotify.js', function() {
+	console.log('loaded spotify.js');
+	add_service(spotify);
 });
 
 var get_service = function(service_name) {
 	return available_services[service_name];
-}
+};
 

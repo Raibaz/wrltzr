@@ -1,5 +1,5 @@
 $.getScript('api.js', function() {
-	console.log('finished loading api.js');	
+	console.log('finished loading api.js');
 	setTimeout(parse_query, 2000);
 });
 
@@ -22,14 +22,14 @@ function init_settings() {
 		step: 1,
 		value: 9 - same_artist_bump,
 		animate: true,
-		slide: function(event, ui) {			
+		slide: function(event, ui) {
 			new_bump = 10 - ui.value;
-			for(key in available_songs) {
+			for(var key in available_songs) {
 				cur_song = available_songs[key];
-				if(cur_song.artist == undefined) {
+				if(cur_song.artist === undefined) {
 					continue;
 				}
-				if(current_song.artist != undefined && cur_song.artist.name === current_song.artist.name || cur_song.artist.name === $('#tags').val()) {
+				if(current_song.artist !== undefined && cur_song.artist.name === current_song.artist.name || cur_song.artist.name === $('#tags').val()) {
 					console.log("Bumping song " + key);
 					cur_song.score = cur_song.score / same_artist_bump * new_bump;
 				}
@@ -45,21 +45,21 @@ function dump_songs() {
 	var next_song_score = Math.floor(next_song.score);
 	for(var i = next_song_score; i > 0; i--) {
 		var found = false;
-		for(j in available_songs) {
-			if(available_songs.hasOwnProperty(j) && available_songs[j] != undefined && available_songs[j].score == i) {
+		for(var j in available_songs) {
+			if(available_songs.hasOwnProperty(j) && available_songs[j] !== undefined && available_songs[j].score === i) {
 				if(!found) {
 					console.log('Songs with score = ' + i);
 					found = true;
-				}				
-				console.log(available_songs[j].key + " from " + available_songs[j].services.map(function(cur){return cur.name;}));
-			} 
+				}
+				//console.log(available_songs[j].key + " from " + available_songs[j].services.map(function(cur){return cur.name;}));
+			}
 		}
 	}
 }
 
 function add_service(service) {
 	if(service.search_tags || service.search_artist) {
-		$('#available_services').append('<span class="service"><label for="' + service.name + '">' + service.name + '</label><div id="' + service.name + '_slider" class="service-weight-slider"/><div><input type="checkbox" checked name="' + service.name + '" id="' + service.name + '"/></div><i class="icon-question-sign icon-white service-icon" title="' + service.tooltip_text + '"></i></span>');		
+		$('#available_services').append('<span class="service"><label for="' + service.name + '">' + service.name + '</label><div id="' + service.name + '_slider" class="service-weight-slider"/><div><input type="checkbox" checked name="' + service.name + '" id="' + service.name + '"/></div><i class="icon-question-sign icon-white service-icon" title="' + service.tooltip_text + '"></i></span>');
 		$('.service-icon').tooltip();
 		$('#' + service.name + "_slider").slider({
 			orientation: "vertical",
@@ -68,17 +68,17 @@ function add_service(service) {
 			step: 0.1,
 			value: service.weight,
 			animate: true,
-			slide: function(event, ui) {								
+			slide: function(event, ui) {
 				this_id = $(this).attr('id');
 				this_id = this_id.replace('_slider', '');
 
-				checkbox = $('#' + this_id);				
+				checkbox = $('#' + this_id);
 				if(!checkbox.prop('checked')) {
 					checkbox.prop('checked', true);
 				}
-				
+
 				console.log("Setting " + this_id + " weight to " + ui.value);
-				service = get_service(this_id);				
+				service = get_service(this_id);
 				recompute_scores(service, ui.value);
 			}
 		});
@@ -88,7 +88,7 @@ function add_service(service) {
 function compute_next_song() {
 	found = undefined;
 	$.each(available_songs, function(index, value) {
-		if(value.deleted || value.disliked) {			
+		if(value.deleted || value.disliked) {
 			return true;
 		}
 		if(!found || found.score < value.score) {
@@ -103,7 +103,7 @@ function compute_next_song() {
 	}
 }
 
-function play_next_song() {	
+function play_next_song() {
 	current_song = next_song;
 	next_song = undefined;
 	delete available_songs[current_song.key];
@@ -112,21 +112,21 @@ function play_next_song() {
 	//Stop any Soundcloud players
 	pause_link = $('.playing a.sc-pause');
 	if(pause_link) {
-		pause_link.click(); 
+		pause_link.click();
 	}
 
-	if(current_song.embed && current_song.embed.code) {			
+	if(current_song.embed && current_song.embed.code) {
 		$('#player').html(current_song.embed.code);
 		$('#song_info').html(build_song_info(current_song)).show();
-		if(current_song.embed.service.name == get_service('youtube').name) {								
-			start_youtube_player();						
-		} else if(current_song.embed.service.name == get_service('Soundcloud').name) {
+		if(current_song.embed.service.name === get_service('youtube').name) {
+			start_youtube_player();
+		} else if(current_song.embed.service.name === get_service('Soundcloud').name) {
 			console.log("starting soundcloud");
 			start_soundcloud_player(current_song.embed);
 		}
 	} else {
 		console.log("embed not found, looking for it with key = " + current_song.embed.key);
-		current_song.embed.service.search_embed(current_song.embed, function(embed) {			
+		current_song.embed.service.search_embed(current_song.embed, function(embed) {
 			if(!embed) {
 				delete available_songs[current_song.embed.key];
 				compute_next_song();
@@ -138,27 +138,27 @@ function play_next_song() {
 				$('#song_info').html(build_song_info(current_song)).show();
 				Mixeeba.refresh();
 				setInterval(refreshMixeeba, 3000);
-				if(embed.service_name == get_service('youtube').name) {								
-					start_youtube_player();						
-				} else if(embed.service_name == get_service('Soundcloud').name) {					
+				if(embed.service_name === get_service('youtube').name) {
+					start_youtube_player();
+				} else if(embed.service_name === get_service('Soundcloud').name) {
 					start_soundcloud_player(embed);
-				}				
+				}
 			}
 		});
-	} 
+	}
 	add_similar_songs();
 	compute_next_song();
 }
 
 function refreshMixeeba() {
-	if($('.mixeeba-links').html() == '&nbsp;') {
+	if($('.mixeeba-links').html() === '&nbsp;') {
 		Mixeeba.refresh();
 	}
 }
 
 function build_song_info(song) {
 
-	if(song.embed.service.search_another_embed == undefined) {
+	if(song.embed.service.search_another_embed === undefined) {
 		$('#change_embed').hide();
 	} else {
 		$('#change_embed').show();
@@ -166,7 +166,7 @@ function build_song_info(song) {
 	ret =  '<div class="track-info mixeebaify-track"><span class="mixeeba-artist">' + song.artist.name + '</span> - <span class="mixeeba-title">' + song.name + '</span></div>';
 	var services_names = song.services.map(function(cur){return cur.name;});
 	ret += '<div class="service-info">Found via ' + services_names + '</div>';
-	ret += '<div class="mixeeba-links">&nbsp;</div><hr/>'
+	ret += '<div class="mixeeba-links">&nbsp;</div><hr/>';
 
 	var url = encodeURIComponent('http://raibaz.github.com/wrltzr/?q=' + song.key.replace(' ', "_"));
 
@@ -178,14 +178,14 @@ function build_song_info(song) {
 }
 
 function add_similar_songs() {
-	if(!current_song || current_song == undefined) {
+	if(!current_song || current_song === undefined) {
 		return;
 	}
 	$('#available_services :checked').each(function(index, value) {
 		service = get_service($(this).attr('id'));
-		if(service.get_similar_artists) {			
+		if(service.get_similar_artists) {
 			service.get_similar_artists(current_song, function(artists) {
-				if(typeof(artists) == 'string') {
+				if(typeof(artists) === 'string') {
 					console.log("No similar artists found on " + artists + " for " + current_song.key);
 					return;
 				}
@@ -211,22 +211,24 @@ function add_similar_songs() {
 
 function add_songs(songs) {
 	$.each(songs, function(index, value) {
-		if(!value.key || value.key == 'undefined' || typeof(value.key) == undefined) {
+		if(!value.key || value.key === 'undefined' || typeof(value.key) === undefined) {
 			return;
 		}
 		if(available_songs[value.key]) {
 			console.log("Found song " + value.key + ", adding " + value.score + " to its score");
 			console.log(value.services);
 			available_songs[value.key].score += value.score;
-			available_songs[value.key].services.push(value.services[0]);			
+			if($.inArray(value.services[0], available_songs[value.key].services) === -1) {
+				available_songs[value.key].services.push(value.services[0]);
+			}
 			//TODO if there is a better embed, replace it
 		} else {
-			available_songs[value.key] = value;			
+			available_songs[value.key] = value;
 		}
 
 		if(current_song && current_song.artist.name === value.artist.name) {
 			console.log("Adding a song from current artist ==> score bump!");
-			available_songs[value.key].score *= same_artist_bump;			
+			available_songs[value.key].score *= same_artist_bump;
 		}
 
 		if(value.artist.name === $('#tags').val() && $('#search_type').val() === 'artist') {
@@ -238,18 +240,18 @@ function add_songs(songs) {
 			console.log("Found song " + value.name + " already played, killing its score");
 			available_songs[value.key].score /= 5;
 		}
-		
+
 		var li_id = value.services[0].name + "_" + index;
 		if(value.artist && value.artist.name && value.name) {
 				li = '<li class="result" id="' + li_id + '"><span class="song_info">' + value.artist.name + " - " + value.name + '</span></li>';
 				$('#results').append(li);
 		}
-		if(value.embed) {								
-			value.embed.service.search_embed(value.embed, function(embed_data) {				
+		if(value.embed) {
+			value.embed.service.search_embed(value.embed, function(embed_data) {
 				if(!embed_data) {
-					delete available_songs[value.key];					
+					delete available_songs[value.key];
 				} else {
-					value.embed.code = embed_data.code;					
+					value.embed.code = embed_data.code;
 				}
 			});
 		}
@@ -260,11 +262,11 @@ function start_youtube_player() {
 	player = new YT.Player('youtube-player', {
 		events: {
 			'onReady': function(event) {
-				event.target.playVideo();				
+				event.target.playVideo();
 			}, 'onStateChange': function(event) {
 				if(event.data === YT.PlayerState.ENDED) {
 					play_next_song();
-					_gaq.push(['_trackEvent', 'user_inputs', 'song_finished', current_song.key, 0, true]);				
+					_gaq.push(['_trackEvent', 'user_inputs', 'song_finished', current_song.key, 0, true]);
 				}
 			}
 		}
@@ -274,14 +276,14 @@ function start_youtube_player() {
 function start_soundcloud_player(embed) {
 	if(!embed) {
 		embed = current_song.embed;
-	}	
+	}
 	$('#player .sc-player').scPlayer({
 		links: [{url: embed.key, title: embed.title}],
 		autoPlay: true,
 		apiKey: sound_cloud.client_id,
 		onPlayerTrackFinish: function() {
 			play_next_song();
-			_gaq.push(['_trackEvent', 'user_inputs', 'song_finished', current_song.key, 0, true]);				
+			_gaq.push(['_trackEvent', 'user_inputs', 'song_finished', current_song.key, 0, true]);
 		}
 	});
 
@@ -292,7 +294,7 @@ function update_all_scores(coeff) {
 		current_song.service.get_song_tags(current_song, function(tags) {
 			$.each(tags, function(index, value) {
 				current_song.service.search_tags(value, function(songs) {
-					$.each(songs, function(index, value) {					
+					$.each(songs, function(index, value) {
 						if(available_songs[value.key]) {
 							artist_coeff = 1;
 							if($('#search_type').val() === 'artist' && value.artist.name === current_song.artist.name) {
@@ -304,20 +306,20 @@ function update_all_scores(coeff) {
 						}
 					});
 					//TODO: this should be at the end of all tags, not here at the end of every tag				
-					compute_next_song();				
-				})
+					compute_next_song();
+				});
 			});
 		});
 	} else {
-		current_song.service.get_similar_artists(current_song, function(artists) {						
-			$.each(artists, function(index, value) {				
+		current_song.service.get_similar_artists(current_song, function(artists) {
+			$.each(artists, function(index, value) {
 				console.log(value);
-				for(cur in available_songs) {
+				for(var cur in available_songs) {
 					if(!available_songs.hasOwnProperty(cur)) {
 						continue;
 					}
-					song = available_songs[cur];						
-					if(song.artist && song.artist.name == value) {
+					song = available_songs[cur];
+					if(song.artist && song.artist.name === value) {
 						console.log("Changing score for song " + song.key);
 						available_songs[song.key].score += value.score * coeff;
 					}
@@ -329,38 +331,39 @@ function update_all_scores(coeff) {
 }
 
 function recompute_scores(service, new_weight) {
-	for(cur in available_songs) {
+	for(var cur in available_songs) {
 		if(!available_songs.hasOwnProperty(cur))  {
 			continue;
 		}
 		loop_song = available_songs[cur];
-		if(loop_song.service && loop_song.services[0].name == service.name) {
+		if(loop_song.service && loop_song.services[0].name === service.name) {
 			console.log("Updating score for " + cur + " from " + loop_song.score + " to " + ((loop_song.score / loop_song.service.weight) * new_weight));
 			loop_song.score = (loop_song.score / loop_song.service.weight) * new_weight;
 		}
 	}
 	service.weight = new_weight;
-	if(available_songs)
-	compute_next_song();
+	if(available_songs) {
+		compute_next_song();
+	}
 }
 
 function play_random_song() {
 	var available_songs_count = 0;
-	for(key in available_songs) {
+	for(var key in available_songs) {
 		if(available_songs.hasOwnProperty(key)) {
 			available_songs_count++;
 		}
 	}
-	var song_index = Math.floor(Math.random() * available_songs_count);	
-	for(key in available_songs) {		
-		if(!available_songs.hasOwnProperty(key)) {
+	var song_index = Math.floor(Math.random() * available_songs_count);
+	for(var kkey in available_songs) {
+		if(!available_songs.hasOwnProperty(kkey)) {
 			continue;
 		}
-		if(played_songs[key]) {
+		if(played_songs[kkey]) {
 			continue;
 		}
 		if(song_index-- <= 0) {
-			next_song = available_songs[key];
+			next_song = available_songs[kkey];
 			play_next_song();
 			available_songs = {};
 			available_songs_count = 0;
@@ -378,7 +381,7 @@ function reload_embed() {
 	current_song.embed.service.search_another_embed(current_song.embed, function(new_embed) {
 		console.log("Found other embed");
 		console.log(new_embed);
-		if(!new_embed || new_embed == undefined) {
+		if(!new_embed || new_embed === undefined) {
 			delete available_songs[current_song.key];
 			play_next_song();
 		} else {
@@ -396,20 +399,20 @@ function delete_next_song() {
 
 function parse_query() {
 	var url_song = get_url_song();
-	if(url_song != undefined) {
+	if(url_song !== undefined) {
 		$('#query').val(url_song);
 		do_search_tags();
 	}
 }
 
-function get_url_song() {	
+function get_url_song() {
 	var query = location.search.substring(1);
 	if(query) {
-		query_params = query.split('&');		
-		for(i in query_params) {			
+		query_params = query.split('&');
+		for(var i in query_params) {
 			cur = query_params[i];
 			cur.replace('&', '');
-			if(cur.indexOf('q=') != -1) {
+			if(cur.indexOf('q=') !== -1) {
 				return cur.replace('q=', '').split('_').join(' ');
 			}
 		}
