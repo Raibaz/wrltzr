@@ -133,7 +133,10 @@ function play_next_song() {
 				play_next_song();
 			} else {
 				console.log("Loaded embed: " + embed.service_id);
-				current_song.embed.code = embed.code;
+				//Use spotify embed only when there's no other one
+				if(embed.service_name !== spotify.name || current_song.embed.code === undefined) {
+					current_song.embed.code = embed.code;
+				}
 				$('#player').html(embed.code);
 				$('#song_info').html(build_song_info(current_song)).show();
 				Mixeeba.refresh();
