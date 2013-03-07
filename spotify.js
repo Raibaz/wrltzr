@@ -92,16 +92,8 @@ var spotify = {
 		/*}*/
 	},
 	get_similar_artists: function(song, callback) {
-		$.getJSON('http://developer.spotify.com/api/v4/artist/similar?&api_key=HXMAGYP12YUFX9IMV&results=5&id=' + escape(song.artist.service_id), function(data) {
-			console.log("Similar artists");
-			console.log(data);
-			response = data.response;
-			ret = [];
-			$.each(response.artists, function(index, value) {
-				ret.push(value.name);
-			});
-			callback(ret);
-		}).error(function(data){callback(spotify.name);});
+		//TODO
+		callback(spotify.name);
 	}
 };
 
