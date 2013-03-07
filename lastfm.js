@@ -28,7 +28,7 @@ var lastfm = {
 					});
 				});				
 			}
-			callback(results);
+			callback(results, lastfm.name);
 		});
 	},
 	search_artist: function(query, callback) {

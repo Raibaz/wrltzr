@@ -20,7 +20,7 @@ var echonest = {
 						results.push(song);
 					})
 				});
-				callback(results);		
+				callback(results, echonest.name);		
 		}).error(function(data) {callback(echonest.name)});
 	},
 	search_artist: function(query, callback) {
@@ -47,7 +47,7 @@ var echonest = {
 				callback(echonest.name);
 				return;
 			}
-			callback(results);		
+			callback(results, echonest.name);		
 		}).error(function(data) {callback(echonest.name)});		
 	},	
 	build_song: function(service_song, lookup_service, artist_index, song_index, callback) {

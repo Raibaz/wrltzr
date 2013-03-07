@@ -100,14 +100,14 @@
 				return false;
 			}
 
-			function search_callback(results) {												
+			function search_callback(results, service_name) {												
 				if(typeof(results) == 'string' ) {				
 					$('#'+results).removeAttr('pending');					
 					console.log("Removed pending for service " + results);
 				} else {
 					add_songs(results);
-					$('#' + results[0].services[0].name).removeAttr('pending');
-					console.log("Removed pending for service " + results[0].services[0].name);
+					$('#' + service_name).removeAttr('pending');
+					console.log("Removed pending for service " + service_name);
 				}				
 				
 				var can_go = true;

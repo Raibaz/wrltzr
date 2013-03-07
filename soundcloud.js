@@ -29,7 +29,7 @@ var sound_cloud = {
 					});
 				});
 			});
-			callback(results);
+			callback(results, sound_cloud.name);
 		});
 	},
 	build_song: function(service_song, lookup_service, index, callback) {

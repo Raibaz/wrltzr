@@ -53,7 +53,7 @@ var spotify = {
 					if(results.length === 0) {
 						callback(spotify.name);
 					} else {
-						callback(results);
+						callback(results, spotify.name);
 					}
 				});
 			});

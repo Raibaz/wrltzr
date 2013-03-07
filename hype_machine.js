@@ -26,7 +26,7 @@ var hype_machine = {
 					});
 				}
 			});			
-			callback(results);
+			callback(results, hype_machine.name);
 		});
 	},
 	search_artist: function(query, callback) {
