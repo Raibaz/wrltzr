@@ -2,7 +2,7 @@ var spotify = {
 	name: "Spotify",
 	search_results_count: 20,
 	weight: 1,
-	tooltip_text: "The spotify is a music knowledge platform powered by MIT, Columbia and Berkeley R&D providing lots of information about many kinds of music; thus, search results provided by The echo nest are generally very reliable, even if sometimes a little shifted towards mainstream music.",
+	tooltip_text: "Spotify is a music listening application that has a very big catalogue; unfortunately, for this service to work, you need to have the Spotify app installed and it doesn't support autoplay, so you have to press play manually.",
 	search_all: function(query, callback) {
 		spotify.search_tags(query, callback);
 		spotify.search_artist(query, callback);
